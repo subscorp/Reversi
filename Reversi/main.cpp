@@ -11,7 +11,7 @@
 using namespace std;
 
 int main()
-{	//testing commit again
+{	//and back from eclipse to github
 	GameManager manager;
 	manager.runGame();
 
