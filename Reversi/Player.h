@@ -1,0 +1,28 @@
+/******************************************
+*Ori Hirshfeld
+*201085776
+******************************************/
+
+#include "Board.h"
+#include "StandardLogic.h"
+#include "Logic.h"
+#pragma once
+class Player
+{
+public:
+	//default constructor for Player
+	Player();
+
+	//set the color of player
+	void setColor(char color);
+
+	//checks if the player can make a move on the current board
+	virtual bool canDoMove(Board *board) = 0;
+
+	//let the player make a move
+	virtual void makeMove(Board *board, int* move) = 0;
+protected:
+	char color;
+	Logic *logic;
+};
+
