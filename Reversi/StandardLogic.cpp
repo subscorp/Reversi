@@ -173,10 +173,7 @@ void StandardLogic::printPossibleMoves(char color, Board *board)
 
 void StandardLogic::getPossibleMoves(char color, Board *board, vector<location> *possibleMoves)
 {
-	//int numRows = board->getNumRows() -1;
-	//int boardSize = numRows * numRows;
 	location possibleMove;
-	//vector<location> *possibleMoves;
 	for (int i = 1; i<board->getNumRows(); i++)
 		for (int j = 1; j < board->getNumCols(); j++)
 		{
@@ -187,7 +184,6 @@ void StandardLogic::getPossibleMoves(char color, Board *board, vector<location> 
 				possibleMoves->push_back(possibleMove);
 			}
 		}
-	//return possibleMoves;
 }
 
 bool StandardLogic::moveIsValid(char color, string input, Board *board)
