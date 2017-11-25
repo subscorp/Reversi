@@ -6,12 +6,14 @@
 #pragma once
 #include "Board.h"
 #include "LocalPlayer.h"
+#include "AIPlayer.h"
 #include "Logic.h"
 class GameManager
 {
 public:
 	//default constructor and destructor for gameManager
 	GameManager();
+	GameManager(Logic *logic, Player *player);
 	~GameManager();
 
 	//announce the winner
