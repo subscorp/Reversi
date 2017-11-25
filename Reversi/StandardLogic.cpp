@@ -5,6 +5,9 @@
 
 #include <iostream>
 #include "StandardLogic.h"
+#include "helper.h"
+#include<vector>
+using namespace std;
 
 
 StandardLogic::StandardLogic()
@@ -166,6 +169,25 @@ void StandardLogic::printPossibleMoves(char color, Board *board)
 				cout << "(" << i << "," << j << ")  ";
 		}
 	cout << endl;
+}
+
+void StandardLogic::getPossibleMoves(char color, Board *board, vector<location> *possibleMoves)
+{
+	//int numRows = board->getNumRows() -1;
+	//int boardSize = numRows * numRows;
+	location possibleMove;
+	//vector<location> *possibleMoves;
+	for (int i = 1; i<board->getNumRows(); i++)
+		for (int j = 1; j < board->getNumCols(); j++)
+		{
+			if (StandardLogic::isPossible(i, j, color, board))
+			{
+				possibleMove.x = i;
+				possibleMove.y = j;
+				possibleMoves->push_back(possibleMove);
+			}
+		}
+	//return possibleMoves;
 }
 
 bool StandardLogic::moveIsValid(char color, string input, Board *board)

@@ -7,7 +7,10 @@
 #include "Board.h"
 #include "StandardLogic.h"
 #include "Player.h"
-#include<string>
+#include <string>
+#include <vector>
+#include "helper.h"
+using namespace std;
 
 #ifndef AIPLAYER_H_
 #define AIPLAYER_H_
@@ -25,6 +28,9 @@ public:
 
 	//let the player make a move
 	void makeMove(Board *board, int* move);
+private:
+	vector<location> possibleMoves;
+
 };
 
 #endif /* AIPLAYER_H_ */

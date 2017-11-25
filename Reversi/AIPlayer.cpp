@@ -4,8 +4,11 @@
 ******************************************/
 
 #include <iostream>
-using namespace std;
 #include "AIPlayer.h"
+#include "helper.h"
+#include <vector>
+using namespace std;
+
 
 AIPlayer::AIPlayer()
 {
@@ -39,13 +42,23 @@ bool AIPlayer::canDoMove(Board *board)
 //let the player make a move
 void AIPlayer::makeMove(Board *board, int* move)
 {
+	//int numRows = board->getNumRows() -1;
+	//int boardSize = numRows * numRows;
+	//vector<location> *possibleMoves;
+	logic->getPossibleMoves(color, board, &possibleMoves);
+	//for(int i=0;i <= possibleMoves.size();i++)
+		//cout << possibleMoves[i].x << " " << possibleMoves[i].y;
+	cout << endl;
 	if (canDoMove(board))
 	{
-		cout << "AI moved..." << endl;
+		//cout << "AI moved..." << endl;
 
 		//temp commands
-		move[0] = 0;
-		move[1] = 0;
+		move[0] = possibleMoves[0].x;
+		move[1] = possibleMoves[0].y;
+		cout << "AI played " << '(' <<possibleMoves[0].x
+				<<',' <<possibleMoves[0].y << ')' << endl;
+		possibleMoves.clear();
 	}
 	else
 	{

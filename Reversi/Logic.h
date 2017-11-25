@@ -4,7 +4,9 @@
 ******************************************/
 
 #include "Board.h"
-#include<string>
+#include <string>
+#include <vector>
+#include "helper.h"
 
 using namespace std;
 
@@ -17,6 +19,9 @@ public:
 
 	//prints the possible moves for color on the current board
 	virtual void printPossibleMoves(char color, Board *board) = 0;
+
+	//returns the possible moves for color on the current board according to the standard rules
+	virtual void getPossibleMoves(char color, Board *board, vector<location> *possibleMoves) = 0;
 
 	//checks if the move color chose to make is valid
 	virtual bool moveIsValid(char color, string input, Board *board) = 0;
