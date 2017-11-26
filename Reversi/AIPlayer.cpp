@@ -42,17 +42,51 @@ bool AIPlayer::canDoMove(Board *board)
 //let the player make a move
 void AIPlayer::makeMove(Board *board, int* move)
 {
+	int numWhites, numBlacks;
+	int score;
+	int max, min;
+	int maxIndex;
+	Board boardCopy = *board;
+
+	//cout << "testing boardCopy by placing something at 7,7 " << endl;
+	//boardCopy.setCell('X',7,7);
+	//boardCopy.printBoard();
+	//numBlacks = boardCopy.getNumBlacks();
+	//numWhites = boardCopy.getNumWhites();
+	//cout <<"boardCopy stats: numBlacks is " << numBlacks << " numWhites is " << numWhites <<endl;
+	//cout << "checking if board has changed: " << endl;
+	//board->printBoard();
+	//numBlacks = board->getNumBlacks();
+	//numWhites = board->getNumWhites();
+	//cout <<"original board stats: numBlacks is " << numBlacks << " numWhites is " << numWhites <<endl;
+	//cout << "after check" << endl;
 
 	logic->getPossibleMoves(color, board, &possibleMoves);
 	if (canDoMove(board))
 	{
+		for(int i=0; i<possibleMoves.size();i++)
+		{
+			//cout << "checking state for possibleMove " << i << ":" << endl;
+			boardCopy.setCell('O',possibleMoves[i].x,possibleMoves[i].y);
+			boardCopy.flip(possibleMoves[i].x,possibleMoves[i].y,'O');
+			//boardCopy.printBoard();
+			score = boardCopy.getNumWhites() - boardCopy.getNumBlacks();
+			//cout << "the score is: " << score << endl;
+			boardCopy = *board;
+			if(score > max)
+			{
+				max = score;
+				maxIndex = i;
+			}
+		}
+
 		//temp commands
-		move[0] = possibleMoves[1].x;
-		move[1] = possibleMoves[1].y;
+		move[0] = possibleMoves[maxIndex].x;
+		move[1] = possibleMoves[maxIndex].y;
 		cout << "AI choices are: ";
 		logic->printPossibleMoves(color,board);
-		cout << "AI played " << '(' <<possibleMoves[1].x
-				<<',' <<possibleMoves[1].y << ')' << endl;
+		cout << "AI played " << '(' <<possibleMoves[maxIndex].x
+				<<',' <<possibleMoves[maxIndex].y << ')' << endl;
 		possibleMoves.clear();
 	}
 	else
