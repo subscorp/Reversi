@@ -39,7 +39,7 @@ bool AIPlayer::canDoMove(Board *board)
 }
 
 //let the AI player make a move
-void AIPlayer::makeMove(Board *board, int* move)
+int* AIPlayer::makeMove(Board *board, int* move)
 {
 	int numMovesO;
 	int numMovesX;
@@ -143,4 +143,6 @@ void AIPlayer::makeMove(Board *board, int* move)
 		move[1] = 0;
 	}
 
+	//return the move, mostly for unit testing and debug
+	return move;
 }

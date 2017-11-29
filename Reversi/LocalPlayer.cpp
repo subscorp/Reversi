@@ -34,7 +34,7 @@ bool LocalPlayer::canDoMove(Board *board)
 }
 
 
-void LocalPlayer:: makeMove(Board *board, int* move)
+int* LocalPlayer:: makeMove(Board *board, int* move)
 {
 	string input;
 	if (canDoMove(board))
@@ -56,5 +56,7 @@ void LocalPlayer:: makeMove(Board *board, int* move)
 		move[0] = 0;
 		move[1] = 0;
 	}
+	//returns the move, mostly for unit testing and debuging
+	return move;
 }
 

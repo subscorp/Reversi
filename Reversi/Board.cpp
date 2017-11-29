@@ -25,8 +25,7 @@ Board::Board()
 
 Board::Board(int numRows, int numCols)
 {
-	this->numRows = numRows;
-	this->numCols = numCols;
+
 }
 
 int Board::getNumCols() const

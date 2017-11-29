@@ -7,6 +7,7 @@
 #include "Board.h"
 #include "LocalPlayer.h"
 #include "GameManager.h"
+#include "AIPlayer.h"
 
 using namespace std;
 

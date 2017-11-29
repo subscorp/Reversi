@@ -25,7 +25,7 @@ public:
 	bool canDoMove(Board *board);
 
 	//let the player make a move
-	void makeMove(Board *board, int* move);
+	int* makeMove(Board *board, int* move);
 };
 
 

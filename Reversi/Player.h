@@ -20,7 +20,7 @@ public:
 	virtual bool canDoMove(Board *board) = 0;
 
 	//let the player make a move
-	virtual void makeMove(Board *board, int* move) = 0;
+	virtual int* makeMove(Board *board, int* move) = 0;
 protected:
 	char color;
 	Logic *logic;
