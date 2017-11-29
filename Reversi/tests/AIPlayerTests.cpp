@@ -1,13 +1,10 @@
 /******************************************
 *Ori Hirshfeld
 *201085776
+*Amichai Wollin
+*300582392
 ******************************************/
 
-//#include <iostream>
-#include "../AIPlayer.h"
-#include "../helper.h"
-#include <vector>
-using namespace std;
 #include "gtest/gtest.h"
 #include "../Board.h"
 #include "../GameManager.h"
@@ -15,8 +12,6 @@ using namespace std;
 StandardLogic logic;
 Board board;
 AIPlayer player('O',&logic);
-//LocalPlayer player('O',&logic);
-GameManager manager;
 
 TEST(AIPlayerTest, CanDoMoveTest)
 {

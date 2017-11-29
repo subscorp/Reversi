@@ -1,9 +1,9 @@
-/*
- * BoardTests.cpp
- *
- *  Created on: Nov 29, 2017
- *      Author: ori
- */
+/******************************************
+*Ori Hirshfeld
+*201085776
+*Amichai Wollin
+*300582392
+******************************************/
 
 
 #include "gtest/gtest.h"

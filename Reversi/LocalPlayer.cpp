@@ -1,6 +1,8 @@
 /******************************************
 *Ori Hirshfeld
 *201085776
+*Amichai Wollin
+*300582392
 ******************************************/
 
 #include <iostream>
@@ -56,7 +58,7 @@ int* LocalPlayer:: makeMove(Board *board, int* move)
 		move[0] = 0;
 		move[1] = 0;
 	}
-	//returns the move, mostly for unit testing and debuging
+	//only for debuging
 	return move;
 }
 
