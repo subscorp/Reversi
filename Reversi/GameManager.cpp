@@ -19,13 +19,13 @@ GameManager::GameManager()
 	playerX = new  LocalPlayer('X', gameLogic);
 	playerO = new LocalPlayer('O', gameLogic);
 }
-GameManager::GameManager(Logic *logic, Player *player)
+GameManager::GameManager(Logic *logic, Player *player1, Player *player2)
 {
 	currentTurn = 'X';
 	gameOver = false;
 	gameLogic = logic;
-	playerX = new LocalPlayer('X', gameLogic);
-	playerO = player;
+	playerX = player1;
+	playerO = player2;
 }
 
 GameManager::~GameManager()

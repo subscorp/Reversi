@@ -1,0 +1,4 @@
+a little bit about why we chose to work with ori's code:
+early on when working on ex2, we decided to plan the uml together and so our projects were similar.
+however there were some differences in the implementation in the other project which made it difficult to use the oop principles needed for ex3, and also there were some memory leaks.
+thus we decided to use ori's code for ex2 to build upon it the code for ex3.

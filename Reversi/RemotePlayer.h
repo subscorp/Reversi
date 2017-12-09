@@ -9,22 +9,25 @@
 #include "Board.h"
 #include "StandardLogic.h"
 #include "Player.h"
+#include "Client.h"
+#include <stdlib.h>
 #include<string>
 
 using namespace std;
 
-class LocalPlayer: public Player
+class RemotePlayer: public Player
 {
 public:
 	//default constructor and destructor for LocalPlayer
-	LocalPlayer();
-	~LocalPlayer();
+	RemotePlayer();
+	~RemotePlayer();
 
 	//constructor for LocalPlayer that takes color and logic as parameters
-	LocalPlayer(char color, Logic *logic);
+	RemotePlayer(char color, Logic *logic, Client *client);
 
 	//let the player make a move
 	int* makeMove(Board *board, int* move);
+
+private:
+	Client *client;
 };
-
-

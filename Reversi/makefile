@@ -3,10 +3,27 @@
 #name Amichai Wollin
 # id: 300582392
 
-a.out: compileAll
-	g++ *.o 
-	rm -f *.o
+a.out:	Board.o AIPlayer.o GameManager.o LocalPlayer.o main.o Player.o StandardLogic.o
+	g++	Board.o AIPlayer.o GameManager.o LocalPlayer.o main.o Player.o StandardLogic.o
 
-compileAll: *.h *.cpp
-	g++ -c *.cpp
+main.o:	main.cpp
+	g++ -c main.cpp
+
+Board.o:	Board.cpp Board.h
+	g++ -c Board.cpp
+
+AIPlayer.o:	AIPlayer.cpp AIPlayer.h
+	g++ -c	AIPlayer.cpp
+
+GameManager.o:	GameManager.cpp GameManager.h
+	g++ -c GameManager.cpp
+
+LocalPlayer.o:	LocalPlayer.cpp LocalPlayer.h
+	g++ -c LocalPlayer.cpp
+
+Player.o:	Player.cpp Player.h
+	g++ -c Player.cpp
+
+StandardLogic.o:	StandardLogic.cpp StandardLogic.h
+	g++ -c StandardLogic.cpp
 

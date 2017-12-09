@@ -19,7 +19,7 @@ public:
 	void setColor(char color);
 
 	//checks if the player can make a move on the current board
-	virtual bool canDoMove(Board *board) = 0;
+	bool canDoMove(Board *board);
 
 	//let the player make a move
 	virtual int* makeMove(Board *board, int* move) = 0;

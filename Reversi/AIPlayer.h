@@ -24,10 +24,6 @@ public:
 	AIPlayer(char color, Logic *logic);
 	virtual ~AIPlayer();
 
-
-	//checks if the player can make a move on the current board
-	bool canDoMove(Board *board);
-
 	//let the player make a move
 	int* makeMove(Board *board, int* move);
 private:

@@ -59,9 +59,12 @@ TEST(BoardTest, IsFullTest)
 {
 	EXPECT_NE(b.isFull(),1);
 
+	b.setNumRows(9);
+	b.setNumCols(9);
 	for(int i=1;i<b.getNumRows();i++)
-		for(int j=1;j<b.getNumCols();j++)
-			b.setCell('X',i,j);
+			for(int j=1;j<b.getNumCols();j++)
+				b.setCell('X',i,j);
+
 	EXPECT_EQ(b.isFull(),1);
 
 }
@@ -73,22 +76,21 @@ TEST(BoardTest, FlipTest)
 	Board b2;
 
 	//flip two at once, from left to right
-	b2.setCell('O',4,5);
-	b2.setCell('X',4,6);
-	b2.flip(4,6,'X');
-	EXPECT_EQ(b2.getCell(4,4),'X');
-	EXPECT_EQ(b2.getCell(4,5),'X');
+	b2.setCell('O',5,6);
+	b2.setCell('X',5,7);
+	b2.flip(5,7,'X');
+	EXPECT_EQ(b2.getCell(5,5),'X');
+	EXPECT_EQ(b2.getCell(5,6),'X');
 
 	//flip from up downwards
-	b2.setCell('O',5,3);
+	b2.setCell('O',6,4);
 	b2.flip(5,3,'O');
-	EXPECT_EQ(b2.getCell(4,3),'O');
+	EXPECT_EQ(b2.getCell(6,4),'O');
 
 	//flip in diagonal
-	b2.setCell('X',5,2);
-	b2.flip(5,2,'X');
-	EXPECT_EQ(b2.getCell(4,3),'X');
-
+	b2.setCell('X',7,3);
+	b2.flip(7,3,'X');
+	EXPECT_EQ(b2.getCell(6,4),'X');
 }
 
 

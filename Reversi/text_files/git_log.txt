@@ -1,0 +1,86 @@
+commit f452700293b36b6f784783eea76490cb1735d239
+Author: Ori Hirshfeld <ori81510@gmail.com>
+Date:   Wed Nov 29 22:57:43 2017 +0200
+
+    added more test units
+
+commit c277703ff7d47c4dc0df8e5e096591fea876c247
+Author: Ori Hirshfeld <ori81510@gmail.com>
+Date:   Wed Nov 29 18:52:29 2017 +0200
+
+    added unit tests for Board and AIPlayer
+
+commit ea28e0137d0fc37cd50285ac5d6bd04bca2d362a
+Author: Ori Hirshfeld <ori81510@gmail.com>
+Date:   Mon Nov 27 00:27:20 2017 +0200
+
+    working smart AI without the debug code, also added comments
+
+commit ebadff463d82c334163f230562de6b939256b510
+Author: Ori Hirshfeld <ori81510@gmail.com>
+Date:   Sun Nov 26 23:54:44 2017 +0200
+
+    working smart AI with prints for debuging
+
+commit 50734cbb8753dd6cfe75c7b86e4c2216d6195336
+Author: Ori Hirshfeld <ori81510@gmail.com>
+Date:   Sun Nov 26 16:39:25 2017 +0200
+
+    another temporal step in the AI development, using copy of board
+
+commit d8e690ea976824efac8b7a8f0b2d4a7e732be116
+Author: Ori Hirshfeld <ori81510@gmail.com>
+Date:   Sat Nov 25 23:13:02 2017 +0200
+
+    a little clean up for latest functions
+
+commit 6206f45771373a8240fc9cde2c89f61a0d88bb7b
+Author: Ori Hirshfeld <ori81510@gmail.com>
+Date:   Sat Nov 25 22:45:21 2017 +0200
+
+    implementation of temporal "lazy" AI
+
+commit e57abed4bb009e757ce69f2944b400abe40865a3
+Author: Ori Hirshfeld <ori81510@gmail.com>
+Date:   Sat Nov 25 17:19:22 2017 +0200
+
+    added AIPlayer class (needs implementation) and also added choices to
+    the user
+
+commit e58b4eddc190b50a9a9bb57ebfe3d56c5a6f685f
+Author: Ori Hirshfeld <ori81510@gmail.com>
+Date:   Sat Nov 25 00:46:21 2017 +0200
+
+    testing commit from eclipse to github
+
+commit b0446205811bb3df05aeafedb58c673f6f74f75d
+Author: subscorp <33960879+subscorp@users.noreply.github.com>
+Date:   Sat Nov 25 00:43:22 2017 +0200
+
+    Update main.cpp
+
+commit 0960f38b4a8f4f20a399b9984be1ed2e380148fa
+Author: subscorp <33960879+subscorp@users.noreply.github.com>
+Date:   Sat Nov 25 00:41:46 2017 +0200
+
+    Delete testingCommit.txt
+
+commit 6d69bd8d2be1520d13d27a5ad94a80d062675039
+Author: subscorp <33960879+subscorp@users.noreply.github.com>
+Date:   Sat Nov 25 00:39:14 2017 +0200
+
+    testingCommit
+
+commit abe86876e684acd59cfff606be6f71eadf5d7e78
+Author: Ori Hirshfeld <ori81510@gmail.com>
+Date:   Sat Nov 25 00:36:21 2017 +0200
+
+    Initial commit
+
+commit b87b674278f1b74f3eb87d056ad30734c0a6fe54
+Author: subscorp <33960879+subscorp@users.noreply.github.com>
+Date:   Sat Nov 25 00:07:07 2017 +0200
+
+    Initial commit
+(END)
+

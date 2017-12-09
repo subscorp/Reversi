@@ -15,7 +15,7 @@ class GameManager
 public:
 	//default constructor and destructor for gameManager
 	GameManager();
-	GameManager(Logic *logic, Player *player);
+	GameManager(Logic *logic, Player *player1, Player *player2);
 	~GameManager();
 
 	//announce the winner

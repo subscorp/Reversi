@@ -28,18 +28,6 @@ AIPlayer::~AIPlayer()
 
 }
 
-//checks if the player can make a move on the current board
-bool AIPlayer::canDoMove(Board *board)
-{
-	for (int i = 1; i<board->getNumRows(); i++)
-		for (int j = 1; j < board->getNumCols(); j++)
-		{
-			if (logic->isPossible(i, j, color, board))
-				return true;
-		}
-	return false;
-}
-
 //let the AI player make a move
 int* AIPlayer::makeMove(Board *board, int* move)
 {
