@@ -111,7 +111,7 @@ int RemotePlayer::sendExercise(int arg1, char op, int arg2) {
 
 int* RemotePlayer::makeMove(Board *board, int* move)
 {
-	/*
+
 	string input;
 	int n;
 	if(local)
@@ -154,9 +154,10 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 		}
 		//only for debuging
 		return move;
-	}
+	} // if local
 	else
 	{
+		cout << "waiting for move" << endl;
 		n = read(clientSocket, &move[0], sizeof(move[0]));
 		if(n == -1) {
 			throw "Error reading move[0]";
@@ -165,11 +166,12 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 		if(n == -1) {
 			throw "Error reading move[1]";
 		}
+		cout << "got move after waiting for move" << endl;
 		return move;
 	}
-	*/
 
 
+/*
 		int num1, num2;
 		char op;
 		while(true) {
@@ -185,5 +187,6 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 			}
 		}
 
+*/
 }
 

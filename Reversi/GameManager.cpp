@@ -24,8 +24,14 @@ GameManager::GameManager(Logic *logic, Player *player1, Player *player2)
 	currentTurn = 'X';
 	gameOver = false;
 	gameLogic = logic;
-	playerX = player1;
-	playerO = player2;
+	if (player1->getColor() == 'X') {
+		playerX = player1;
+		playerO = player2;
+	}
+	else {
+		playerX = player2;
+		playerO = player1;
+	}
 }
 
 GameManager::~GameManager()

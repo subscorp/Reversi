@@ -64,7 +64,7 @@ int main()
 			//exit(-1);
 		//}
 		gameLogic = new StandardLogic();
-		thisPlayer = new RemotePlayer("127.0.0.1", 8887, gameLogic, 1);
+		thisPlayer = new RemotePlayer("127.0.0.1", 8884, gameLogic, 1);
 		try {
 			thisPlayer->connectToServer();
 		} catch (const char *msg) {
