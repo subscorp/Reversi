@@ -1,0 +1,12 @@
+/******************************************
+*Ori Hirshfeld
+*201085776
+******************************************/
+
+#include "../AIPlayer.h"
+#include "../helper.h"
+#include <vector>
+using namespace std;
+#include "gtest/gtest.h"
+#include "../Board.h"
+#include "../GameManager.h"

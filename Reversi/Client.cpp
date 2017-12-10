@@ -16,6 +16,9 @@ serverIP(serverIP), serverPort(serverPort),
 }
 
 void Client::connectToServer() {
+
+	int turn = 3;
+	int n;
 	// Create a socket point
 	clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(clientSocket == -1) {
@@ -47,7 +50,12 @@ void Client::connectToServer() {
 	if (connect(clientSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) == -1) {
 		throw "Error connecting to server";
 	}
+	n = read(clientSocket,&turn,sizeof(turn));
+	if(n == -1) {
+		throw "Error reading turn from socket";
+	}
 	cout << "Connected to server" << endl;
+	cout << "turn:" << turn << endl;
 }
 
 int Client::sendExercise(int arg1, char op, int arg2) {
@@ -65,6 +73,7 @@ int Client::sendExercise(int arg1, char op, int arg2) {
 		throw "Error writing arg2 to socket";
 	}
 
+	//n = write(clientSocket,&turn,sizeof(turn));
 	// Read the result from the server
 	int result;
 	n = read(clientSocket, &result, sizeof(result));

@@ -23,6 +23,9 @@ public:
 
 	//let the player make a move
 	virtual int* makeMove(Board *board, int* move) = 0;
+
+	//virtual void connectToServer() = 0;
+	//virtual int sendExercise(int arg1, char op, int arg2) = 0;
 protected:
 	char color;
 	Logic *logic;

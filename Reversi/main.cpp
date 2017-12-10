@@ -21,8 +21,11 @@ int main()
 	Logic *gameLogic;
 	Player *playerO;
 	Player *playerX;
+	RemotePlayer *thisPlayer;
+	RemotePlayer *otherPlayer;
 
 	//presenting choices to the user and getting input
+	cout <<"Welcome to Reversi!" << endl;
 	cout << "enter 1 to play against AI player" << endl;
 	cout << "enter 2 to play against Human player" <<endl;
 	cout << "enter 3 to play against remote player" << endl;
@@ -53,18 +56,24 @@ int main()
 	//using standard logic and playing against remote player
 	case 3:
 	{
-		Client client("127.0.0.1", 8888);
+		//Client client("127.0.0.1", 8889);
+		//try {
+			//client.connectToServer();
+		//} catch (const char *msg) {
+			//cout << "Failed to connect to server. Reason: " << msg << endl;
+			//exit(-1);
+		//}
+		gameLogic = new StandardLogic();
+		thisPlayer = new RemotePlayer("127.0.0.1", 8887, gameLogic, 1);
 		try {
-			client.connectToServer();
+			thisPlayer->connectToServer();
 		} catch (const char *msg) {
 			cout << "Failed to connect to server. Reason: " << msg << endl;
 			exit(-1);
 		}
-		gameLogic = new StandardLogic();
-		playerX = new RemotePlayer('X', gameLogic, &client);
-		playerO = new RemotePlayer('O', gameLogic, &client);
+		otherPlayer = new RemotePlayer(gameLogic, 0);
 		cout << "starting game against remote player" <<endl << endl;
-		manager = new GameManager(gameLogic, playerX, playerO);
+		manager = new GameManager(gameLogic, thisPlayer, otherPlayer);
 		break;
 	}
 	//defualt case is the same as case 2
