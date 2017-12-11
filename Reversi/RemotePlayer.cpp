@@ -42,12 +42,16 @@ void RemotePlayer::decideTurn() {
 int* RemotePlayer::makeMove(Board *board, int* move)
 {
 	string input;
+	int numPawns = board->getNumBlacks() + board->getNumWhites();
 	int n;
 
+	//the current player is this player
 	if(local)
 	{
+		//if the player can do move, get it and send to the server
 		if (canDoMove(board))
 		{
+			numPawns++;
 			cout << color << ": it's your move." << endl;
 			do {
 				cout << "your possible moves: ";
@@ -66,8 +70,13 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 			if(n == -1) {
 				throw "Error writing move[1]";
 			}
-
+			n = write(clientSocket, &numPawns, sizeof(numPawns));
+			if(n == -1) {
+				throw "Error writing numPawns";
+			}
 		}
+
+		//if the player can't do move, indicate it by move = 0,0 and send to the server
 		else
 		{
 			cout << "no moves available for " << color << endl << endl;
@@ -81,9 +90,12 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 			if(n == -1) {
 				throw "Error writing move[1]";
 			}
+			n = write(clientSocket, &numPawns, sizeof(numPawns));
 		}
 
-	} // if local
+	}
+
+	// if the current player is the other player get his move from the server
 	else
 	{
 		cout << "waiting for other player's move..." << endl;
@@ -98,11 +110,13 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 		}
 		if(move[0] == 0 && move[1] == 0)
 			cout << "no moves available for " << color << endl << endl;
+
 		else
 			cout << color << " played (" << move[0] << "," << move[1] << ")"
 					<< endl;
+
 	}
-	//only for debuging
+
 	return move;
 }
 

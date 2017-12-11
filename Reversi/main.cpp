@@ -61,7 +61,7 @@ int main()
 
 		gameLogic = new StandardLogic();
 
-		int socket = connectToServer("127.0.0.1", 8884);
+		int socket = connectToServer("127.0.0.1", 8882);
 		thisPlayer = new RemotePlayer(socket, gameLogic, 1);
 		try {
 			thisPlayer->decideTurn();
