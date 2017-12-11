@@ -3,8 +3,8 @@
 #name Amichai Wollin
 # id: 300582392
 
-a.out:	Board.o AIPlayer.o GameManager.o LocalPlayer.o main.o Player.o StandardLogic.o
-	g++	Board.o AIPlayer.o GameManager.o LocalPlayer.o main.o Player.o StandardLogic.o
+a.out:	Board.o AIPlayer.o GameManager.o LocalPlayer.o main.o Player.o StandardLogic.o RemotePlayer.o
+	g++	Board.o AIPlayer.o GameManager.o LocalPlayer.o main.o Player.o StandardLogic.o RemotePlayer.o
 
 main.o:	main.cpp
 	g++ -c main.cpp
@@ -26,4 +26,7 @@ Player.o:	Player.cpp Player.h
 
 StandardLogic.o:	StandardLogic.cpp StandardLogic.h
 	g++ -c StandardLogic.cpp
+
+RemotePlayer.o:	RemotePlayer.cpp RemotePlayer.h
+	g++ -c RemotePlayer.cpp
 

@@ -29,12 +29,10 @@ public:
 	~RemotePlayer();
 
 	//constructor for Remote Player that takes color and logic as parameters
-	RemotePlayer(Logic *logic, int local);
-	RemotePlayer(const char *serverIP, int serverPort, Logic *logic, int local);
+	RemotePlayer(int socket, Logic *logic, int local);
 
 
-	void connectToServer();
-	int sendExercise(int arg1, char op, int arg2);
+	void decideTurn();
 
 	//let the player make a move
 	int* makeMove(Board *board, int* move);
