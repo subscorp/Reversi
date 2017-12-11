@@ -96,10 +96,12 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 		if(n == -1) {
 			throw "Error reading move[1]";
 		}
-		cout << color << " played (" << move[0] << "," << move[1] << ")"
-				<< endl;
+		if(move[0] == 0 && move[1] == 0)
+			cout << "no moves available for " << color << endl << endl;
+		else
+			cout << color << " played (" << move[0] << "," << move[1] << ")"
+					<< endl;
 	}
-
 	//only for debuging
 	return move;
 }

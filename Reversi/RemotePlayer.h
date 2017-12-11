@@ -9,7 +9,6 @@
 #include "Board.h"
 #include "StandardLogic.h"
 #include "Player.h"
-#include "Client.h"
 #include <stdlib.h>
 #include<string>
 #include <sys/socket.h>

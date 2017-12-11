@@ -51,11 +51,11 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.exe.debug.676742172.1327700740" name="main_tests.cpp" rcbsApplicability="disable" resourcePath="main_tests.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068.1651144312">
-						<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068.1651144312" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068"/>
+					<fileInfo id="cdt.managedbuild.config.gnu.exe.debug.676742172.657495165" name="main_tests.cpp" rcbsApplicability="disable" resourcePath="forSubmit/src/client/main_tests.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068.385135173">
+						<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068.385135173" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068"/>
 					</fileInfo>
 					<sourceEntries>
-						<entry excluding="main_tests.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="forSubmit/src/client/main_tests.cpp|main_tests.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
