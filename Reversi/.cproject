@@ -51,8 +51,10 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.exe.debug.676742172.657495165" name="main_tests.cpp" rcbsApplicability="disable" resourcePath="forSubmit/src/client/main_tests.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068.385135173">
-						<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068.385135173" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068"/>
+					<fileInfo id="cdt.managedbuild.config.gnu.exe.debug.676742172.2107563971" name="main.cpp" rcbsApplicability="disable" resourcePath="main.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068.2117900428">
+						<tool command="g++" id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068.2117900428" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068">
+							<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.831899128" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
+						</tool>
 					</fileInfo>
 					<sourceEntries>
 						<entry excluding="forSubmit/src/client/main_tests.cpp|main_tests.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
