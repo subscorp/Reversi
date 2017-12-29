@@ -1,9 +1,3 @@
-/******************************************
-*Ori Hirshfeld
-*201085776
-*Amichai Wollin
-*300582392
-******************************************/
 
 #include "ReversiServer.h"
 #include <sys/socket.h>
