@@ -7,12 +7,7 @@
 
 #include "PlayCommand.h"
 
-PlayCommand::PlayCommand() {
-	// TODO Auto-generated constructor stub
 
+PlayCommand::~PlayCommand() {
 }
-
-//PlayCommand::~PlayCommand() {
-	// TODO Auto-generated destructor stub
-//}
 

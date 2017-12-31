@@ -7,12 +7,8 @@
 
 #include "CloseCommand.h"
 
-CloseCommand::CloseCommand() {
-	// TODO Auto-generated constructor stub
+
+CloseCommand::~CloseCommand() {
 
 }
-
-//CloseCommand::~CloseCommand() {
-	// TODO Auto-generated destructor stub
-//}
 

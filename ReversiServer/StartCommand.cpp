@@ -7,13 +7,7 @@
 
 #include "StartCommand.h"
 
-StartCommand::StartCommand() {
 
-	// TODO Auto-generated constructor stub
-
+StartCommand::~StartCommand() {
 }
-
-//StartCommand::~StartCommand() {
-	// TODO Auto-generated destructor stub
-//}
 

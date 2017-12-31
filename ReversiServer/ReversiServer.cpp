@@ -7,6 +7,12 @@
 #include <iostream>
 #include <stdio.h>
 
+#include "StartCommand.h"
+#include "ListGamesCommand.h"
+#include "JoinCommand.h"
+#include "PlayCommand.h"
+#include "CloseCommand.h"
+
 using namespace std;
 #define MAX_CONNECTED_CLIENTS 10
 
@@ -18,6 +24,29 @@ struct ThreadArgs {
 ReversiServer::ReversiServer(int port): port(port), serverSocket(0)
 {
 	cout << "starting server..." << endl;
+	commandsMap["start"] = new StartCommand(this);
+	commandsMap["list_games"] = new ListGamesCommand(this);
+	commandsMap["join"] = new JoinCommand(this);
+	commandsMap["play"] = new PlayCommand(this);
+	commandsMap["close"] = new CloseCommand(this);
+}
+
+ReversiServer::~ReversiServer() {
+	map<string, Command *>::iterator it;
+	for (it = commandsMap.begin(); it != commandsMap.end(); it++)
+	{
+		delete it->second;
+	}
+}
+
+string ReversiServer::executeCommand(string command, vector<string> args, int socket)
+{
+	if (commandsMap.count(command) > 0) {
+		cout << "Running command "<<command<<endl;
+		Command *commandObj = commandsMap[command];
+		return commandObj->execute(args, socket);
+	}
+	return "Command not exist";
 }
 
 static vector<string> split(const string &str, string delimeter) {
@@ -41,27 +70,32 @@ void* handleClientThread(void *arg) {
 	int clientSocket = args->socket;
 	ReversiServer *self = args->self;
 	int shouldStop = 1;
-	char buffer[BUFFER_SIZE] = {0};
 
 	while (true) {
-		//reading move and number of pawns from clientSocket
-		int n = read(clientSocket, buffer, BUFFER_SIZE);
-		if(n == -1)
+		char buffer[BUFFER_SIZE] = {0};
+
+		// reading message from client
+		if(read(clientSocket, buffer, BUFFER_SIZE) == -1)
 		{
 			cout << "Error reading from client" << endl;
-			//exit(1);
-		}
-		if(n == 0)
-		{
-			cout << "Client disconnected" << endl;
 			//exit(1);
 		}
 
 		string message(buffer);
 		vector<string> parts = split(message, " "); // start mygame
 		cout << "Got message " << message << " parts: "<< parts.size() << endl;
-		if (parts.size() > 1)
-			self->commandsManager.executeCommand(parts[0], parts);
+		if (parts.size() > 0) {
+			string result = self->executeCommand(parts[0], parts, clientSocket);
+			char buffer[BUFFER_SIZE] = {0};
+			strcpy(buffer, result.c_str());
+			cout << "Sending message: " << result << endl;
+			if(write(clientSocket, buffer, BUFFER_SIZE) == -1)
+			{
+				cout << "Error writing response" << endl;
+			}
+
+		} // if
+
 	} // while
 	return NULL;
 }

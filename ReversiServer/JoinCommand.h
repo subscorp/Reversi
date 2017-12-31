@@ -9,21 +9,36 @@
 #define JOINCOMMAND_H_
 
 #include "Command.h"
+#include "ReversiServer.h"
 #include <iostream>
 
 class JoinCommand: public Command
 {
 public:
-	JoinCommand();
-	virtual void execute(vector<string> args)
-	{
-		for (int i = 0; i < args.size(); i++)
-		{
-			cout << args[i] << " ";
-		}
-		cout << endl;
-		cout << "in join command" << endl;
+	ReversiServer *server;
 
+	JoinCommand(ReversiServer *server) {
+		this->server = server;
+	}
+	~JoinCommand();
+
+	virtual string execute(vector<string> args, int clientSocket)
+	{
+		cout << "in join command" << endl;
+		if (args.size() < 2)
+			return "";
+
+		string name = args[1];
+
+		if (this->server->games.count(name) == 0) {
+			cout << "Game "<<name<< "does not exist!" <<endl;
+			return "";
+		}
+
+		GameInfo game = this->server->games[name];
+		game.client2 = clientSocket;
+		this->server->games[name] = game;
+		return "";
 	}
 };
 

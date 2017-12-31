@@ -7,12 +7,7 @@
 
 #include "JoinCommand.h"
 
-JoinCommand::JoinCommand() {
-	// TODO Auto-generated constructor stub
 
+JoinCommand::~JoinCommand() {
 }
-
-//JoinCommand::~JoinCommand() {
-	// TODO Auto-generated destructor stub
-//}
 

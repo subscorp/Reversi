@@ -2,15 +2,17 @@
 #define COMMANDSMANAGER_H
 
 #include <map>
-#include "Command.h"
+//#include "Includes.h"
+
 class CommandsManager
 {
 	public:
 		CommandsManager();
+		//CommandsManager(ReversiServer *server);
 		~CommandsManager();
-		void executeCommand(string command, vector<string> args);
-	private:
-		map<string, Command *> commandsMap;
+		//void executeCommand(string command, vector<string> args);
+	//private:
+		//map<string, Command *> commandsMap;
 };
 
 #endif

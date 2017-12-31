@@ -9,20 +9,22 @@
 #define PLAYCOMMAND_H_
 
 #include "Command.h"
+#include "ReversiServer.h"
 #include <iostream>
 
-class PlayCommand: public Command
+class PlayCommand : public Command
 {
 public:
-	PlayCommand();
-	virtual void execute(vector<string> args)
+	ReversiServer *server;
+	PlayCommand(ReversiServer *server) {
+		this->server = server;
+	}
+	~PlayCommand();
+
+	virtual string execute(vector<string> args, int clientSocket)
 	{
-		for (int i = 0; i < args.size(); i++)
-		{
-			cout << args[i] << " ";
-		}
-		cout << endl;
 		cout << "in play command" << endl;
+		return "";
 	}
 };
 

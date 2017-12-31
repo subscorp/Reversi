@@ -5,25 +5,31 @@
 #include <vector> //new
 #include <string> // new
 #include <map> // new
-//#include <pair>
 #include <pthread.h>
 #include <thread>
+#include "Command.h"
 
-#include "CommandsManager.h"
+using namespace std;
 
-using namespace std; // new
-
+struct GameInfo {
+	int client1;
+	int client2;
+};
 
 class ReversiServer
 {
 
 public:
+	friend class Command;
 	ReversiServer(int port);
+	~ReversiServer();
 	void start();
 	void stop();
 	void *loopThread(void *arg);
-	map<string, int > games;
-	CommandsManager commandsManager;
+	string executeCommand(string command, vector<string> args, int socket);
+	//map<string, int > games;
+	//CommandsManager commandsManager;
+	map<string, GameInfo> games;
 	vector<pthread_t> threads;
 
 private:
@@ -31,5 +37,6 @@ private:
 	int serverSocket; // the socket's file descriptor
 
 	int handleClient(int clientSocket, int clientSocket2);
+	map<string, Command *> commandsMap;
 };
 

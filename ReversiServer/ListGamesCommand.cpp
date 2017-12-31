@@ -7,12 +7,8 @@
 
 #include "ListGamesCommand.h"
 
-ListGamesCommand::ListGamesCommand() {
-	// TODO Auto-generated constructor stub
 
+
+ListGamesCommand::~ListGamesCommand() {
 }
-
-//ListGamesCommand::~ListGamesCommand() {
-	// TODO Auto-generated destructor stub
-//}
 

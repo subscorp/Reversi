@@ -15,27 +15,34 @@
 #include <map>
 #include "ReversiServer.h"
 
+
 class StartCommand: public Command
 {
 public:
-	StartCommand();
-	virtual void execute(vector<string> args)
-		{
-			for (int i = 0; i < args.size(); i++)
-			{
-				cout << args[i] << " ";
-			}
-			cout << endl;
-			cout << "in start command" << endl;
+	ReversiServer *server;
+	StartCommand(ReversiServer *server){
+		this->server = server;
+	}
+	~StartCommand();
 
-			string name = args[0];
-			cout << name << endl;
+	virtual string execute(vector<string> args, int clientSocket)
+	{
+		if (args.size() < 2)
+			return "";
 
-			//games[name] = 1;
+		cout << "in start command" << endl;
+		string name = args[1];
+		cout << "creating a game named " << name << endl;
 
-
-
+		if (server->games.count(name) > 0) {
+			return "Error: game name exists";
 		}
+		GameInfo game;
+		game.client1 = clientSocket;
+		game.client2 = 0;
+		server->games[name] = game;
+		return "start success";
+	}
 };
 
 #endif /* STARTCOMMAND_H_ */
