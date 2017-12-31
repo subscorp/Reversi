@@ -11,6 +11,7 @@
 #include "Command.h"
 #include "ReversiServer.h"
 #include <iostream>
+#include <unistd.h>
 
 class JoinCommand: public Command
 {
@@ -31,14 +32,21 @@ public:
 		string name = args[1];
 
 		if (this->server->games.count(name) == 0) {
-			cout << "Game "<<name<< "does not exist!" <<endl;
-			return "";
+			return "Game does not exist!";
 		}
 
+		// game start
 		GameInfo game = this->server->games[name];
 		game.client2 = clientSocket;
 		this->server->games[name] = game;
-		return "";
+
+		char buffer[BUFFER_SIZE] = "start_x";
+		if(write(game.client1, buffer, BUFFER_SIZE) == -1)
+		{
+			cout << "Error writing response" << endl;
+		}
+
+		return "start_o";
 	}
 };
 

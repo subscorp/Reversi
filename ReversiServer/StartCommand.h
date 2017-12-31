@@ -41,7 +41,7 @@ public:
 		game.client1 = clientSocket;
 		game.client2 = 0;
 		server->games[name] = game;
-		return "start success";
+		return "";
 	}
 };
 

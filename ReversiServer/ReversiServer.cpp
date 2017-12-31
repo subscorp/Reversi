@@ -84,8 +84,9 @@ void* handleClientThread(void *arg) {
 		string message(buffer);
 		vector<string> parts = split(message, " "); // start mygame
 		cout << "Got message " << message << " parts: "<< parts.size() << endl;
-		if (parts.size() > 0) {
-			string result = self->executeCommand(parts[0], parts, clientSocket);
+
+		string result = self->executeCommand(parts[0], parts, clientSocket);
+		if (result != "") {
 			char buffer[BUFFER_SIZE] = {0};
 			strcpy(buffer, result.c_str());
 			cout << "Sending message: " << result << endl;
@@ -93,8 +94,7 @@ void* handleClientThread(void *arg) {
 			{
 				cout << "Error writing response" << endl;
 			}
-
-		} // if
+		}
 
 	} // while
 	return NULL;

@@ -24,15 +24,16 @@ public:
 	virtual string execute(vector<string> args, int clientSocket)
 	{
 		cout << "in list games command" << endl;
-		map<string, GameInfo>::iterator it;
-		string list;
 
+		string list;
+		map<string, GameInfo>::iterator it;
 		for (it = server->games.begin(); it != server->games.end(); it++)
 		{
 			if (it->second.client2 == 0) // if game is joinable
 				list += it->first + "\n";
 		}
-
+		if (list.empty())
+			return "No Games available.\n";
 		return list;
 	}
 };
