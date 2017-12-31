@@ -2,6 +2,7 @@
 #include <iostream>
 using namespace std;
 #include "RemotePlayer.h"
+#define BUFFER_SIZE 1024
 
 RemotePlayer::RemotePlayer()
 {
@@ -13,6 +14,21 @@ RemotePlayer::RemotePlayer(int socket, Logic *logic, int local) :
 
 RemotePlayer::~RemotePlayer()
 {
+}
+
+static vector<string> split(const string &str, string delimeter) {
+	vector<string> result;
+	int prevPos = 0, position = 0;
+	string part;
+	do {
+		position = str.find(delimeter, prevPos);
+		if (position == string::npos)
+			position = str.length(); // last part, extract until end
+		part = str.substr(prevPos, position - prevPos);
+		result.push_back(part);
+		prevPos = position + delimeter.length();
+	} while (position < (int) str.length() && prevPos < (int) str.length());
+	return result;
 }
 
 void RemotePlayer::decideTurn() {
@@ -32,6 +48,7 @@ void RemotePlayer::decideTurn() {
 		color = 'O';
 	cout << "you are player " << color << endl;
 }
+
 
 int* RemotePlayer::makeMove(Board *board, int* move)
 {
@@ -56,18 +73,25 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 			} while (!logic->moveIsValid(color, input, board));
 			move[0] = (int)input[0] - 48;
 			move[1] = (int)input[2] - 48;
-			n = write(clientSocket, &move[0], sizeof(move[0]));
-			if(n == -1) {
-				throw "Error writing move[0]";
+
+			input = "play " + input;
+			char buffer[BUFFER_SIZE] = {0};
+			strcpy(buffer, input.c_str());
+			if(write(clientSocket, buffer, BUFFER_SIZE) == -1) {
+				throw "Error writing move";
 			}
-			n = write(clientSocket, &move[1], sizeof(move[1]));
-			if(n == -1) {
-				throw "Error writing move[1]";
-			}
-			n = write(clientSocket, &numPawns, sizeof(numPawns));
-			if(n == -1) {
-				throw "Error writing numPawns";
-			}
+//			n = write(clientSocket, &move[0], sizeof(move[0]));
+//			if(n == -1) {
+//				throw "Error writing move[0]";
+//			}
+//			n = write(clientSocket, &move[1], sizeof(move[1]));
+//			if(n == -1) {
+//				throw "Error writing move[1]";
+//			}
+//			n = write(clientSocket, &numPawns, sizeof(numPawns));
+//			if(n == -1) {
+//				throw "Error writing numPawns";
+//			}
 		}
 
 		//if the player can't do move, indicate it by move = 0,0 and send to the server
@@ -76,34 +100,36 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 			cout << "no moves available for " << color << endl << endl;
 			move[0] = 0;
 			move[1] = 0;
-			n = write(clientSocket, &move[0], sizeof(move[0]));
-			if(n == -1) {
-				throw "Error writing move[0]";
-			}
-			n = write(clientSocket, &move[1], sizeof(move[1]));
-			if(n == -1) {
-				throw "Error writing move[1]";
-			}
-			n = write(clientSocket, &numPawns, sizeof(numPawns));
+//			n = write(clientSocket, &move[0], sizeof(move[0]));
+//			if(n == -1) {
+//				throw "Error writing move[0]";
+//			}
+//			n = write(clientSocket, &move[1], sizeof(move[1]));
+//			if(n == -1) {
+//				throw "Error writing move[1]";
+//			}
+//			n = write(clientSocket, &numPawns, sizeof(numPawns));
 		}
 
-	}
+	} // if local
 
 	// if the current player is the other player get his move from the server
 	else
 	{
+		char buffer[BUFFER_SIZE] = {0};
 		cout << "waiting for other player's move..." << endl;
-		n = read(clientSocket, &move[0], sizeof(move[0]));
-		if(n == -1) {
+		if(read(clientSocket, buffer, BUFFER_SIZE) == -1) {
 			throw "Error reading move[0]";
 		}
 
-		n = read(clientSocket, &move[1], sizeof(move[1]));
-		if(n == -1) {
-			throw "Error reading move[1]";
-		}
+		string result(buffer); // 3 4
+		vector<string> parts = split(result, " ");
+
+		move[0] = (int)parts[0][0] - 48;
+		move[1] = (int)parts[1][0] - 48;
+
 		if(move[0] == 0 && move[1] == 0)
-			cout << "no moves available for " << color << endl << endl;
+			cout << "no moves available for " << color << endl;
 
 		else
 			cout << color << " played (" << move[0] << "," << move[1] << ")"

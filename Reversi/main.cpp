@@ -13,8 +13,8 @@
 
 using namespace std;
 
-int connectToServer(char *, int);
-void gameLoop(int socket);
+int connectToServer(const char *, int);
+char gameLoop(int socket);
 
 int main()
 {
@@ -60,19 +60,20 @@ int main()
 	{
 		gameLogic = new StandardLogic();
 
-		int socket = connectToServer("127.0.0.1", 8882);
-		gameLoop(socket);
-		return 0;
+		int socket = connectToServer("127.0.0.1", 8888);
+		int color = gameLoop(socket);
 
 		thisPlayer = new RemotePlayer(socket, gameLogic, 1);
-		try {
-			thisPlayer->decideTurn();
-		} catch (const char *msg) {
-			cout << "Failed to connect to server. Reason: " << msg << endl;
-			exit(-1);
-		}
+		thisPlayer->setColor(color);
+//		try {
+//			thisPlayer->decideTurn();
+//		} catch (const char *msg) {
+//			cout << "Failed to connect to server. Reason: " << msg << endl;
+//			exit(-1);
+//		}
 		otherPlayer = new RemotePlayer(socket, gameLogic, 0);
 		otherPlayer->setColor(thisPlayer->getColor() == 'X' ? 'O' : 'X');
+
 		cout << "starting game against remote player" <<endl << endl;
 		manager = new GameManager(gameLogic, thisPlayer, otherPlayer);
 		break;
@@ -92,29 +93,34 @@ int main()
 	return 0;
 }
 
-void gameLoop(int socket) {
+char gameLoop(int clientSocket) {
 	while (true) {
+		cout << "enter message for the server" << endl;
 		char buffer[BUFFER_SIZE] = {0};
 		string input;
 		std::getline(std::cin, input);
 
 		strcpy(buffer, input.c_str());
-		if(write(socket, buffer, BUFFER_SIZE) == -1) {
+		if(write(clientSocket, buffer, BUFFER_SIZE) == -1) {
 			throw "Error writing move[1]";
 		}
 
-		if(read(socket, buffer, BUFFER_SIZE) == -1) {
+		if(read(clientSocket, buffer, BUFFER_SIZE) == -1) {
+			cout << "Message: " << buffer <<endl;
 			throw "Error reading move[1]";
 		}
 		string result(buffer);
-		if (result == "start_game") {
+		if (result == "start_x")
+			return 'X';
+		else if (result == "start_o")
+			return 'O';
 
-		}
 		cout << result << endl;
 	} // while
+	return '-';
 }
 
-int connectToServer(char *serverIP, int serverPort)
+int connectToServer(const char *serverIP, int serverPort)
 {
 	int clientSocket;
 	// Create a socket point
