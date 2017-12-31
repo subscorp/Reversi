@@ -9,10 +9,12 @@
 #include "AIPlayer.h"
 #include "RemotePlayer.h"
 #include "GameManager.h"
+#define BUFFER_SIZE 1024
 
 using namespace std;
 
 int connectToServer(char *, int);
+void gameLoop(int socket);
 
 int main()
 {
@@ -56,10 +58,12 @@ int main()
 	//using standard logic and playing against remote player
 	case 3:
 	{
-
 		gameLogic = new StandardLogic();
 
 		int socket = connectToServer("127.0.0.1", 8882);
+		gameLoop(socket);
+		return 0;
+
 		thisPlayer = new RemotePlayer(socket, gameLogic, 1);
 		try {
 			thisPlayer->decideTurn();
@@ -86,6 +90,28 @@ int main()
 	delete manager;
 
 	return 0;
+}
+
+void gameLoop(int socket) {
+	while (true) {
+		char buffer[BUFFER_SIZE] = {0};
+		string input;
+		std::getline(std::cin, input);
+
+		strcpy(buffer, input.c_str());
+		if(write(socket, buffer, BUFFER_SIZE) == -1) {
+			throw "Error writing move[1]";
+		}
+
+		if(read(socket, buffer, BUFFER_SIZE) == -1) {
+			throw "Error reading move[1]";
+		}
+		string result(buffer);
+		if (result == "start_game") {
+
+		}
+		cout << result << endl;
+	} // while
 }
 
 int connectToServer(char *serverIP, int serverPort)
@@ -127,6 +153,8 @@ int connectToServer(char *serverIP, int serverPort)
 		throw "Error connecting to server";
 	}
 	cout << "Connected to server" << endl;
+
+
 	cout << "waiting for other player to join..." << endl;
 	return clientSocket;
 }
