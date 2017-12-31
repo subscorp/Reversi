@@ -7,15 +7,14 @@
 #include <iostream>
 #include <stdlib.h>
 
-#include <vector>
-#include <string>
-#include "CommandsManager.h"
+#include <vector> //new
+#include <string> //new
+#include "CommandsManager.h" //new
 
 using namespace std;
 
 int main()
 {
-	/*
 	ReversiServer server(8882);
 	try {
 		server.start();
@@ -23,12 +22,4 @@ int main()
 		cout << "Cannot start server. Reason: " << msg << endl;
 		exit(-1);
 	}
-	*/
-
-	vector<string> args;
-	args.push_back("1");
-	args.push_back("2");
-	args.push_back("3");
-	CommandsManager *manager = new CommandsManager();
-	manager->executeCommand("start",args);
 }

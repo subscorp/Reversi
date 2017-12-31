@@ -10,17 +10,67 @@
 using namespace std;
 #define MAX_CONNECTED_CLIENTS 10
 
+struct ThreadArgs {
+	int socket;
+	ReversiServer *self;
+};
+
 ReversiServer::ReversiServer(int port): port(port), serverSocket(0)
 {
 	cout << "starting server..." << endl;
 }
 
+static vector<string> split(const string &str, string delimeter) {
+	vector<string> result;
+	int prevPos = 0, position = 0;
+	string part;
+	do {
+		position = str.find(delimeter, prevPos);
+		if (position == string::npos)
+			position = str.length(); // last part, extract until end
+		part = str.substr(prevPos, position - prevPos);
+		result.push_back(part);
+		prevPos = position + delimeter.length();
+	} while (position < (int) str.length() && prevPos < (int) str.length());
+	return result;
+}
+
+void* handleClientThread(void *arg) {
+	//temporal variable for current assignment
+	ThreadArgs *args = (ThreadArgs *) arg;
+	int clientSocket = args->socket;
+	ReversiServer *self = args->self;
+	int shouldStop = 1;
+	char buffer[BUFFER_SIZE] = {0};
+
+	while (true) {
+		//reading move and number of pawns from clientSocket
+		int n = read(clientSocket, buffer, BUFFER_SIZE);
+		if(n == -1)
+		{
+			cout << "Error reading from client" << endl;
+			//exit(1);
+		}
+		if(n == 0)
+		{
+			cout << "Client disconnected" << endl;
+			//exit(1);
+		}
+
+		string message(buffer);
+		vector<string> parts = split(message, " "); // start mygame
+		cout << "Got message " << message << " parts: "<< parts.size() << endl;
+		if (parts.size() > 1)
+			self->commandsManager.executeCommand(parts[0], parts);
+	} // while
+	return NULL;
+}
+
+
 void ReversiServer::start()
 {
-	int connectedPlayers = 0;
-	int turn = 1;
-	int shouldStop = 0;
-	int n;
+	ThreadArgs args;
+
 	//create a socket point
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(serverSocket == -1)
@@ -56,65 +106,18 @@ void ReversiServer::start()
 		int clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddress,
 				&clientAddressLen);
 
-		connectedPlayers++;
-		if(connectedPlayers == 1)
-		{
-			cout << "player 1 connected to server" << endl << "waiting for other player to join..." << endl;
-		}
-
-		int clientSocket2 = accept(serverSocket, (struct sockaddr *)&clientAddress,
-				&clientAddressLen);
-
-		connectedPlayers++;
-		if(connectedPlayers == 2)
-		{
-			cout << "player 2 connected to server" << endl;
-
-			// send turn for two players
-			n = write(clientSocket,&turn, sizeof(turn));
-			if(n == -1)
-			{
-				throw "Error writing turn to socket1";
-			}
-			turn = 2;
-
-			n = write(clientSocket2, &turn, sizeof(turn));
-			if(n == -1)
-			{
-				throw "Error writing turn to socket2";
-			}
-		}
-		//cout << "Client connected" << endl;
+		cout << "Client connected" << endl;
 		if(clientSocket == -1)
 			throw "Error on accept";
 
-		while(true)
-		{
-			/*
-			here we are getting move from one client socket and writing to the other
-			we also check here if the game is over:
-			the return value from handleClient indicates if no moves are available for both players
-			and the following read command checks if the board is full
-			 */
-
-			shouldStop = handleClient(clientSocket, clientSocket2);
-			if(shouldStop)
-				break;
-
-			shouldStop = handleClient(clientSocket2, clientSocket);
-			if(shouldStop)
-				break;
-		}
-
-		// Close communication with the client
-		close(clientSocket);
-		close(clientSocket2);
-
-		//reset helper variables
-		connectedPlayers = 0;
-		turn = 1;
-		shouldStop = 0;
-	}
+		pthread_t tid;
+		args.socket = clientSocket;
+		args.self = this;
+		pthread_create(&tid, NULL, handleClientThread, &args);
+		this->threads.push_back(tid);
+		cout << "Thread created" << endl;
+	} // while
+	close(serverSocket);
 }
 
 // Handle requests from a specific client
@@ -195,3 +198,6 @@ void ReversiServer::stop()
 {
 	close(serverSocket);
 }
+
+
+

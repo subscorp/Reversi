@@ -8,20 +8,24 @@
 
 CommandsManager::CommandsManager()
 {
-	commandsMap["print"] = new PrintCommand();
+	//commandsMap["print"] = new PrintCommand();
 	commandsMap["start"] = new StartCommand();
 	commandsMap["list_games"] = new ListGamesCommand();
 	commandsMap["join"] = new JoinCommand();
 	commandsMap["play"] = new PlayCommand();
 	commandsMap["close"] = new CloseCommand();
-
-	// Add more commands...
 }
 
 void CommandsManager::executeCommand(string command, vector<string> args)
 {
-	Command *commandObj = commandsMap[command];
-	commandObj->execute(args);
+	if (commandsMap.count(command) > 0) {
+		cout << "Running command "<<command<<endl;
+		Command *commandObj = commandsMap[command];
+		commandObj->execute(args);
+	}
+	else {
+		cout <<"Command not exist" << endl;
+	}
 }
 
 CommandsManager::~CommandsManager()

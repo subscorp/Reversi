@@ -6,11 +6,11 @@
 class CommandsManager
 {
 	public:
-	CommandsManager();
-	~CommandsManager();
-	void executeCommand(string command, vector<string> args);
+		CommandsManager();
+		~CommandsManager();
+		void executeCommand(string command, vector<string> args);
 	private:
-	map<string, Command *> commandsMap;
+		map<string, Command *> commandsMap;
 };
 
 #endif

@@ -1,13 +1,7 @@
-# name: ori hirshfeld
-# id: 201085776
-#name Amichai Wollin
-# id: 300582392
+all: server
 
-a.out:	ReversiServer.o main.o
-	g++	ReversiServer.o main.o
+# Put here all the common files
+COMMON_SOURCES = ReversiServer.cpp CloseCommand.cpp Command.cpp CommandsManager.cpp JoinCommand.cpp ListGamesCommand.cpp PlayCommand.cpp StartCommand.cpp PrintCommand.cpp
 
-main.o:	main.cpp
-	g++ -c main.cpp
-
-ReversiServer.o:	ReversiServer.cpp ReversiServer.h
-	g++ -c ReversiServer.cpp
+server:
+	g++ -std=c++0x -pthread main.cpp $(COMMON_SOURCES) -I. -o a.out
