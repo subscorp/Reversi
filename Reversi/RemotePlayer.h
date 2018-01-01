@@ -24,9 +24,6 @@ public:
 	//constructor for Remote Player that takes color and logic as parameters
 	RemotePlayer(int socket, Logic *logic, int local);
 
-
-	void decideTurn();
-
 	//let the player make a move
 	int* makeMove(Board *board, int* move);
 

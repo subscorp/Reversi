@@ -65,12 +65,6 @@ int main()
 
 		thisPlayer = new RemotePlayer(socket, gameLogic, 1);
 		thisPlayer->setColor(color);
-//		try {
-//			thisPlayer->decideTurn();
-//		} catch (const char *msg) {
-//			cout << "Failed to connect to server. Reason: " << msg << endl;
-//			exit(-1);
-//		}
 		otherPlayer = new RemotePlayer(socket, gameLogic, 0);
 		otherPlayer->setColor(thisPlayer->getColor() == 'X' ? 'O' : 'X');
 
