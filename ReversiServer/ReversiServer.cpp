@@ -84,7 +84,8 @@ void* handleClientThread(void *arg) {
 		string message(buffer);
 		vector<string> parts = split(message, " "); // start mygame
 		cout << "Got message " << message << " parts: "<< parts.size() << endl;
-
+		//if(strcmp(message ," ") == 0)
+			//parts[0] = "close";
 		string result = self->executeCommand(parts[0], parts, clientSocket);
 		if (result != "") {
 			char buffer[BUFFER_SIZE] = {0};
@@ -152,80 +153,6 @@ void ReversiServer::start()
 		cout << "Thread created" << endl;
 	} // while
 	close(serverSocket);
-}
-
-// Handle requests from a specific client
-int ReversiServer::handleClient(int clientSocket, int clientSocket2)
-{
-	//temporal variable for current assignment
-	int boardSize = 64;
-
-	int arg1, arg2, numPawns;
-	int shouldStop = 1;
-	static int numCantMove = 0;
-
-		//reading move and number of pawns from clientSocket
-		int n = read(clientSocket, &arg1, sizeof(arg1));
-		if(n == -1)
-		{
-			cout << "Error reading arg1" << endl;
-			return 1;
-		}
-		if(n == 0)
-		{
-			cout << "Client disconnected" << endl;
-			return 1;
-		}
-
-		n = read(clientSocket, &arg2, sizeof(arg2));
-		if(n == -1)
-		{
-			cout << "Error reading arg2" << endl;
-			return 1;
-		}
-
-		n = read(clientSocket, &numPawns, sizeof(numPawns));
-		if(n == -1)
-		{
-			cout << "Error reading numPawns" << endl;
-			return 1;
-		}
-
-		cout << "Got move " << arg1 <<"," << arg2 << endl;
-
-		//writing move to the other client socket
-		n = write(clientSocket2, &arg1, sizeof(arg1));
-		if(n == -1)
-		{
-			cout << "Error writing arg1" << endl;
-			return 1;
-		}
-		n = write(clientSocket2, &arg2, sizeof(arg2));
-		if(n == -1)
-		{
-			cout << "Error writing arg2" << endl;
-			return 1;
-		}
-
-		// checks if the board is full
-		if(numPawns == boardSize)
-			return shouldStop;
-
-		//checks if both players has no moves available
-		if(arg1 == 0 && arg2 == 0)
-		{
-			numCantMove++;
-			if(numCantMove == 2)
-				return shouldStop;
-			if(numCantMove > 2)
-				numCantMove = 0;
-		}
-		else
-			numCantMove = 0;
-
-
-		cout << "written move to other player" << endl;
-		return !shouldStop;
 }
 
 void ReversiServer::stop()

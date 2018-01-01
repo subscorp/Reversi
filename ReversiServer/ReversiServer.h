@@ -25,18 +25,13 @@ public:
 	~ReversiServer();
 	void start();
 	void stop();
-	void *loopThread(void *arg);
 	string executeCommand(string command, vector<string> args, int socket);
-	//map<string, int > games;
-	//CommandsManager commandsManager;
 	map<string, GameInfo> games;
 	vector<pthread_t> threads;
 
 private:
 	int port;
 	int serverSocket; // the socket's file descriptor
-
-	int handleClient(int clientSocket, int clientSocket2);
 	map<string, Command *> commandsMap;
 };
 
