@@ -10,7 +10,6 @@ JoinCommand::JoinCommand(ReversiServer *server)
 
 string JoinCommand::execute(vector<string> args, int clientSocket)
 {
-	cout << "in join command" << endl;
 	if (args.size() < 2)
 		return "";
 

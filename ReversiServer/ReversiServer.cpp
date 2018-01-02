@@ -45,7 +45,6 @@ string ReversiServer::executeCommand(string command, vector<string> args, int so
 {
 	if (commandsMap.count(command) > 0)
 	{
-		cout << "Running command "<<command<<endl;
 		Command *commandObj = commandsMap[command];
 		return commandObj->execute(args, socket);
 	}
@@ -93,9 +92,6 @@ void* handleClientThread(void *arg)
 		//parsing the message
 		string message(buffer);
 		vector<string> parts = split(message, " "); // start mygame
-		cout << "Got message " << message << " parts: "<< parts.size() << endl;
-		//if(strcmp(message ," ") == 0)
-			//parts[0] = "close";
 
 		//executing the command we got from the message
 		string result = self->executeCommand(parts[0], parts, clientSocket);
@@ -104,7 +100,6 @@ void* handleClientThread(void *arg)
 			//responding to the client
 			char buffer[BUFFER_SIZE] = {0};
 			strcpy(buffer, result.c_str());
-			cout << "Sending message: " << result << endl;
 			if(write(clientSocket, buffer, BUFFER_SIZE) == -1)
 			{
 				cout << "Error writing response" << endl;

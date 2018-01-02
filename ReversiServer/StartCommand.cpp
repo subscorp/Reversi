@@ -12,7 +12,6 @@ string StartCommand::execute(vector<string> args, int clientSocket)
 	if (args.size() < 2)
 		return "";
 
-	cout << "in start command" << endl;
 	string name = args[1];
 	cout << "creating a game named " << name << endl;
 

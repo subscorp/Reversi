@@ -9,7 +9,6 @@ PlayCommand::PlayCommand(ReversiServer *server)
 
 string PlayCommand::execute(vector<string> args, int clientSocket)
 {
-	cout << "in play command" << endl;
 	if (args.size() < 3)
 	{
 		cout << "Error in play" << endl;

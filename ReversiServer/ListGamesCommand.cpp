@@ -9,8 +9,6 @@ ListGamesCommand::ListGamesCommand(ReversiServer *server)
 
 string ListGamesCommand::execute(vector<string> args, int clientSocket)
 {
-	cout << "in list games command" << endl;
-
 	string list;
 	map<string, GameInfo>::iterator it;
 	for (it = server->games.begin(); it != server->games.end(); it++)
