@@ -1,7 +1,5 @@
 # name: ori hirshfeld
 # id: 201085776
-#name Amichai Wollin
-# id: 300582392
 
 a.out:	Board.o AIPlayer.o GameManager.o LocalPlayer.o main.o Player.o StandardLogic.o RemotePlayer.o
 	g++	Board.o AIPlayer.o GameManager.o LocalPlayer.o main.o Player.o StandardLogic.o RemotePlayer.o

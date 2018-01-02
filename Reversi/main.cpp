@@ -60,7 +60,7 @@ int main()
 	{
 		gameLogic = new StandardLogic();
 
-		int socket = connectToServer("127.0.0.1", 8881);
+		int socket = connectToServer("127.0.0.1", 8882);
 		int color = menuLoop(socket);
 
 		thisPlayer = new RemotePlayer(socket, gameLogic, 1);
