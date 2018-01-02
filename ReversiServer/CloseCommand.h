@@ -1,6 +1,5 @@
 
-#ifndef CLOSECOMMAND_H_
-#define CLOSECOMMAND_H_
+#pragma once
 
 #include "Command.h"
 #include "ReversiServer.h"
@@ -10,17 +9,6 @@ class CloseCommand: public Command
 {
 public:
 	ReversiServer *server;
-	CloseCommand(ReversiServer* server)
-	{
-		this->server = server;
-	}
-	~CloseCommand();
-
-	virtual string execute(vector<string> args, int clientSocket)
-	{
-		cout << "in close command" << endl;
-		return "";
-	}
+	CloseCommand(ReversiServer* server);
+	virtual string execute(vector<string> args, int clientSocket);
 };
-
-#endif /* CLOSECOMMAND_H_ */

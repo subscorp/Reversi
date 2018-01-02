@@ -18,6 +18,7 @@ using namespace std;
 struct ThreadArgs
 {
 	int socket;
+	pthread_t tid;
 	ReversiServer *self;
 };
 
@@ -69,30 +70,38 @@ static vector<string> split(const string &str, string delimeter)
 
 void* handleClientThread(void *arg)
 {
-	//temporal variable for current assignment
+	//ThreadArgs assignments
 	ThreadArgs *args = (ThreadArgs *) arg;
 	int clientSocket = args->socket;
+	pthread_t tid = args-> tid;
 	ReversiServer *self = args->self;
+
 
 	while (true)
 	{
 		char buffer[BUFFER_SIZE] = {0};
 
 		// reading message from client
-		if(read(clientSocket, buffer, BUFFER_SIZE) == -1)
+		if(read(clientSocket, buffer, BUFFER_SIZE) == 0)
 		{
-			cout << "Error reading from client" << endl;
-			//exit(1);
+			cout << "closing socket " << clientSocket << endl;
+
+			// move on to close the game
+			break;
 		}
 
+		//parsing the message
 		string message(buffer);
 		vector<string> parts = split(message, " "); // start mygame
 		cout << "Got message " << message << " parts: "<< parts.size() << endl;
 		//if(strcmp(message ," ") == 0)
 			//parts[0] = "close";
+
+		//executing the command we got from the message
 		string result = self->executeCommand(parts[0], parts, clientSocket);
 		if (result != "")
 		{
+			//responding to the client
 			char buffer[BUFFER_SIZE] = {0};
 			strcpy(buffer, result.c_str());
 			cout << "Sending message: " << result << endl;
@@ -102,7 +111,39 @@ void* handleClientThread(void *arg)
 			}
 		}
 
-	} // while
+	} //while
+
+	//closing the game
+
+	//erasing current thread
+	int i = 0;
+	vector<pthread_t>::iterator it;
+	for(it = self->threads.begin(); it < self->threads.end(); it++)
+	{
+		if(*it == tid)
+		{
+			self->threads.erase(it);
+			break;
+		}
+		i++;
+	}
+
+	//erasing the game from the games list
+	map<string, GameInfo>::iterator it2;
+	int j = 0;
+	for (it2 = self->games.begin(); it2 != self->games.end(); it2++)
+	{
+		if(it2->second.client1 == clientSocket || it2->second.client2 == clientSocket)
+		{
+			self->games.erase(it2);
+			break;
+		}
+		j++;
+	}
+
+	//closing the client socket
+	close(clientSocket);
+
 	return NULL;
 }
 
@@ -153,6 +194,7 @@ void ReversiServer::start()
 		pthread_t tid;
 		args.socket = clientSocket;
 		args.self = this;
+		args.tid = tid;
 		pthread_create(&tid, NULL, handleClientThread, &args);
 		this->threads.push_back(tid);
 		cout << "Thread created" << endl;

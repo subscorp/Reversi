@@ -14,7 +14,7 @@ using namespace std;
 
 int main()
 {
-	ReversiServer server(8888);
+	ReversiServer server(8881);
 	try {
 		server.start();
 	} catch (const char *msg) {

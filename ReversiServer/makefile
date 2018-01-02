@@ -1,3 +1,6 @@
+# name: ori hirshfeld
+# id: 201085776
+
 all: server
 
 # Put here all the common files
