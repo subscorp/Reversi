@@ -18,7 +18,7 @@ string JoinCommand::execute(vector<string> args, int clientSocket)
 
 	if (this->server->games.count(name) == 0)
 	{
-		return "Game does not exist!";
+		return "\nGame does not exist!\n";
 	}
 
 	// game start
