@@ -1,10 +1,3 @@
-/*
- * StartCommand.h
- *
- *  Created on: Dec 29, 2017
- *      Author: ori
- */
-
 
 #ifndef STARTCOMMAND_H_
 #define STARTCOMMAND_H_
@@ -20,7 +13,8 @@ class StartCommand: public Command
 {
 public:
 	ReversiServer *server;
-	StartCommand(ReversiServer *server){
+	StartCommand(ReversiServer *server)
+	{
 		this->server = server;
 	}
 	~StartCommand();
@@ -34,7 +28,8 @@ public:
 		string name = args[1];
 		cout << "creating a game named " << name << endl;
 
-		if (server->games.count(name) > 0) {
+		if (server->games.count(name) > 0)
+		{
 			return "Error: game name exists";
 		}
 		GameInfo game;

@@ -1,9 +1,3 @@
-/*
- * ListGamesCommand.h
- *
- *  Created on: Dec 29, 2017
- *      Author: ori
- */
 
 #ifndef LISTGAMESCOMMAND_H_
 #define LISTGAMESCOMMAND_H_
@@ -16,7 +10,8 @@ class ListGamesCommand: public Command
 {
 public:
 	ReversiServer *server;
-	ListGamesCommand(ReversiServer *server) {
+	ListGamesCommand(ReversiServer *server)
+	{
 		this->server = server;
 	}
 	~ListGamesCommand();

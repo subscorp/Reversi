@@ -1,9 +1,3 @@
-/*
- * JoinCommand.h
- *
- *  Created on: Dec 29, 2017
- *      Author: ori
- */
 
 #ifndef JOINCOMMAND_H_
 #define JOINCOMMAND_H_
@@ -18,7 +12,8 @@ class JoinCommand: public Command
 public:
 	ReversiServer *server;
 
-	JoinCommand(ReversiServer *server) {
+	JoinCommand(ReversiServer *server)
+	{
 		this->server = server;
 	}
 	~JoinCommand();
@@ -31,7 +26,8 @@ public:
 
 		string name = args[1];
 
-		if (this->server->games.count(name) == 0) {
+		if (this->server->games.count(name) == 0)
+		{
 			return "Game does not exist!";
 		}
 

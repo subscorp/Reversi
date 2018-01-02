@@ -1,9 +1,3 @@
-/*
- * CloseCommand.h
- *
- *  Created on: Dec 29, 2017
- *      Author: ori
- */
 
 #ifndef CLOSECOMMAND_H_
 #define CLOSECOMMAND_H_
@@ -16,7 +10,8 @@ class CloseCommand: public Command
 {
 public:
 	ReversiServer *server;
-	CloseCommand(ReversiServer* server) {
+	CloseCommand(ReversiServer* server)
+	{
 		this->server = server;
 	}
 	~CloseCommand();
@@ -25,7 +20,6 @@ public:
 	{
 		cout << "in close command" << endl;
 		return "";
-
 	}
 };
 

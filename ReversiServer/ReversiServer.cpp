@@ -1,12 +1,11 @@
 
-#include "ReversiServer.h"
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <unistd.h>
 #include <string.h>
 #include <iostream>
 #include <stdio.h>
-
+#include "ReversiServer.h"
 #include "StartCommand.h"
 #include "ListGamesCommand.h"
 #include "JoinCommand.h"
@@ -16,7 +15,8 @@
 using namespace std;
 #define MAX_CONNECTED_CLIENTS 10
 
-struct ThreadArgs {
+struct ThreadArgs
+{
 	int socket;
 	ReversiServer *self;
 };
@@ -31,7 +31,8 @@ ReversiServer::ReversiServer(int port): port(port), serverSocket(0)
 	commandsMap["close"] = new CloseCommand(this);
 }
 
-ReversiServer::~ReversiServer() {
+ReversiServer::~ReversiServer()
+{
 	map<string, Command *>::iterator it;
 	for (it = commandsMap.begin(); it != commandsMap.end(); it++)
 	{
@@ -41,7 +42,8 @@ ReversiServer::~ReversiServer() {
 
 string ReversiServer::executeCommand(string command, vector<string> args, int socket)
 {
-	if (commandsMap.count(command) > 0) {
+	if (commandsMap.count(command) > 0)
+	{
 		cout << "Running command "<<command<<endl;
 		Command *commandObj = commandsMap[command];
 		return commandObj->execute(args, socket);
@@ -49,7 +51,8 @@ string ReversiServer::executeCommand(string command, vector<string> args, int so
 	return "Command not exist";
 }
 
-static vector<string> split(const string &str, string delimeter) {
+static vector<string> split(const string &str, string delimeter)
+{
 	vector<string> result;
 	int prevPos = 0, position = 0;
 	string part;
@@ -64,14 +67,15 @@ static vector<string> split(const string &str, string delimeter) {
 	return result;
 }
 
-void* handleClientThread(void *arg) {
+void* handleClientThread(void *arg)
+{
 	//temporal variable for current assignment
 	ThreadArgs *args = (ThreadArgs *) arg;
 	int clientSocket = args->socket;
 	ReversiServer *self = args->self;
-	int shouldStop = 1;
 
-	while (true) {
+	while (true)
+	{
 		char buffer[BUFFER_SIZE] = {0};
 
 		// reading message from client
@@ -87,7 +91,8 @@ void* handleClientThread(void *arg) {
 		//if(strcmp(message ," ") == 0)
 			//parts[0] = "close";
 		string result = self->executeCommand(parts[0], parts, clientSocket);
-		if (result != "") {
+		if (result != "")
+		{
 			char buffer[BUFFER_SIZE] = {0};
 			strcpy(buffer, result.c_str());
 			cout << "Sending message: " << result << endl;

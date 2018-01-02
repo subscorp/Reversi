@@ -2,16 +2,17 @@
 #pragma once
 #define BUFFER_SIZE 1024
 
-#include <vector> //new
-#include <string> // new
-#include <map> // new
+#include <vector>
+#include <string>
+#include <map>
 #include <pthread.h>
 #include <thread>
 #include "Command.h"
 
 using namespace std;
 
-struct GameInfo {
+struct GameInfo
+{
 	int client1;
 	int client2;
 };

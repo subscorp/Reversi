@@ -6,10 +6,9 @@
 #include "ReversiServer.h"
 #include <iostream>
 #include <stdlib.h>
-
-#include <vector> //new
-#include <string> //new
-#include "CommandsManager.h" //new
+#include <vector>
+#include <string>
+#include "CommandsManager.h"
 
 using namespace std;
 
