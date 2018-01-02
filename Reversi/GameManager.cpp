@@ -18,11 +18,13 @@ GameManager::GameManager(Logic *logic, Player *player1, Player *player2)
 	currentTurn = 'X';
 	gameOver = false;
 	gameLogic = logic;
-	if (player1->getColor() == 'X') {
+	if (player1->getColor() == 'X')
+	{
 		playerX = player1;
 		playerO = player2;
 	}
-	else {
+	else
+	{
 		playerX = player2;
 		playerO = player1;
 	}
@@ -40,8 +42,8 @@ void GameManager::runGame()
 	int* move = new int[2];
 	move[0] = 1;
 	move[1] = 1;
-	bool xCanMove;
-	bool oCanMove;
+	bool xCanMove = true;
+	bool oCanMove = true;
 
 	// THIS IS THE GAME LOOP
 	while (!gameOver)

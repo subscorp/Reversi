@@ -14,7 +14,7 @@
 using namespace std;
 
 int connectToServer(const char *, int);
-char gameLoop(int socket);
+char menuLoop(int socket);
 
 int main()
 {
@@ -60,15 +60,15 @@ int main()
 	{
 		gameLogic = new StandardLogic();
 
-		int socket = connectToServer("127.0.0.1", 8888);
-		int color = gameLoop(socket);
+		int socket = connectToServer("127.0.0.1", 8881);
+		int color = menuLoop(socket);
 
 		thisPlayer = new RemotePlayer(socket, gameLogic, 1);
 		thisPlayer->setColor(color);
 		otherPlayer = new RemotePlayer(socket, gameLogic, 0);
 		otherPlayer->setColor(thisPlayer->getColor() == 'X' ? 'O' : 'X');
 
-		cout << "starting game against remote player" <<endl << endl;
+		cout << "starting game against remote player" << endl << endl;
 		manager = new GameManager(gameLogic, thisPlayer, otherPlayer);
 		break;
 	}
@@ -87,11 +87,15 @@ int main()
 	return 0;
 }
 
-char gameLoop(int clientSocket)
+//menu loop for case 3
+char menuLoop(int clientSocket)
 {
 	while (true)
 	{
-		cout << "enter message for the server" << endl;
+		cout << "enter start name to start a new game named \"name\"" << endl;
+		cout << "enter join name to join the game named \"name\"" << endl;
+		cout << "enter list_games to see a list of available games" << endl;
+
 		char buffer[BUFFER_SIZE] = {0};
 		string input;
 		std::getline(std::cin, input);
@@ -99,13 +103,13 @@ char gameLoop(int clientSocket)
 		strcpy(buffer, input.c_str());
 		if(write(clientSocket, buffer, BUFFER_SIZE) == -1)
 		{
-			throw "Error writing move[1]";
+			throw "Error writing to server";
 		}
 
 		if(read(clientSocket, buffer, BUFFER_SIZE) == -1)
 		{
 			cout << "Message: " << buffer << endl;
-			throw "Error reading move[1]";
+			throw "Error reading from server";
 		}
 		string result(buffer);
 		if (result == "start_x")
@@ -118,6 +122,7 @@ char gameLoop(int clientSocket)
 	return '-';
 }
 
+//connecting the client to the server
 int connectToServer(const char *serverIP, int serverPort)
 {
 	int clientSocket;
@@ -158,8 +163,6 @@ int connectToServer(const char *serverIP, int serverPort)
 	}
 	cout << "Connected to server" << endl;
 
-
-	cout << "waiting for other player to join..." << endl;
 	return clientSocket;
 }
 
