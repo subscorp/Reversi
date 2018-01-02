@@ -87,20 +87,24 @@ int main()
 	return 0;
 }
 
-char gameLoop(int clientSocket) {
-	while (true) {
+char gameLoop(int clientSocket)
+{
+	while (true)
+	{
 		cout << "enter message for the server" << endl;
 		char buffer[BUFFER_SIZE] = {0};
 		string input;
 		std::getline(std::cin, input);
 
 		strcpy(buffer, input.c_str());
-		if(write(clientSocket, buffer, BUFFER_SIZE) == -1) {
+		if(write(clientSocket, buffer, BUFFER_SIZE) == -1)
+		{
 			throw "Error writing move[1]";
 		}
 
-		if(read(clientSocket, buffer, BUFFER_SIZE) == -1) {
-			cout << "Message: " << buffer <<endl;
+		if(read(clientSocket, buffer, BUFFER_SIZE) == -1)
+		{
+			cout << "Message: " << buffer << endl;
 			throw "Error reading move[1]";
 		}
 		string result(buffer);

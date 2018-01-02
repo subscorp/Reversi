@@ -16,7 +16,8 @@ RemotePlayer::~RemotePlayer()
 {
 }
 
-static vector<string> split(const string &str, string delimeter) {
+static vector<string> split(const string &str, string delimeter)
+{
 	vector<string> result;
 	int prevPos = 0, position = 0;
 	string part;
@@ -55,7 +56,8 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 			input = "play " + input;
 			char buffer[BUFFER_SIZE] = {0};
 			strcpy(buffer, input.c_str());
-			if(write(clientSocket, buffer, BUFFER_SIZE) == -1) {
+			if(write(clientSocket, buffer, BUFFER_SIZE) == -1)
+			{
 				throw "Error writing move";
 			}
 		}
@@ -67,7 +69,8 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 			move[0] = 0;
 			move[1] = 0;
 			char buffer[BUFFER_SIZE] = {"play 0 0"};
-			if(write(clientSocket, buffer, BUFFER_SIZE) == -1) {
+			if(write(clientSocket, buffer, BUFFER_SIZE) == -1)
+			{
 				throw "Error writing move";
 			}
 		}
@@ -79,7 +82,8 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 	{
 		char buffer[BUFFER_SIZE] = {0};
 		cout << "waiting for other player's move..." << endl;
-		if(read(clientSocket, buffer, BUFFER_SIZE) == -1) {
+		if(read(clientSocket, buffer, BUFFER_SIZE) == -1)
+		{
 			throw "Error reading move";
 		}
 
