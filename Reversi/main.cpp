@@ -4,6 +4,8 @@
 ******************************************/
 
 #include <iostream>
+#include <fstream>
+#include <stdlib.h>
 #include "Board.h"
 #include "LocalPlayer.h"
 #include "AIPlayer.h"
@@ -60,7 +62,22 @@ int main()
 	{
 		gameLogic = new StandardLogic();
 
-		int socket = connectToServer("127.0.0.1", 8882);
+		//reading from file IP and port number
+		int portNumber;
+		string IP;
+		string portAsString;
+		ifstream myfile("clientConnectionDetails.txt");
+		if (myfile.is_open())
+		{
+			getline(myfile,IP);
+			getline(myfile,portAsString);
+			myfile.close();
+		}
+		else
+			cout << "Unable to open file";
+
+		portNumber = atoi(portAsString.c_str());
+		int socket = connectToServer(IP.c_str(), portNumber);
 		int color = menuLoop(socket);
 
 		thisPlayer = new RemotePlayer(socket, gameLogic, 1);
