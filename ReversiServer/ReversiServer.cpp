@@ -67,6 +67,38 @@ static vector<string> split(const string &str, string delimeter)
 	return result;
 }
 
+/*
+void* loopThread(void* arg)
+{
+	ThreadArgs args;
+	// Define the client socket's structures
+	struct sockaddr_in clientAddress;
+	socklen_t clientAddressLen;
+
+	while(true)
+	{
+		cout << "Waiting for client connections..." << endl;
+
+		//Accept a new client connection
+		int clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddress,
+				&clientAddressLen);
+
+		cout << "Client connected" << endl;
+		if(clientSocket == -1)
+			throw "Error on accept";
+
+		pthread_t tid;
+		args.socket = clientSocket;
+		args.self = this;
+		args.tid = tid;
+		pthread_create(&tid, NULL, handleClientThread, &args);
+		this->threads.push_back(tid);
+		cout << "Thread created" << endl;
+	} // while
+	close(serverSocket);
+}
+*/
+
 void* handleClientThread(void *arg)
 {
 	//ThreadArgs assignments
@@ -199,7 +231,9 @@ void ReversiServer::start()
 
 void ReversiServer::stop()
 {
+	pthread_cancel(serverThreadId);
 	close(serverSocket);
+	cout << "Server stopped" << endl;
 }
 
 

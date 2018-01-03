@@ -34,5 +34,6 @@ private:
 	int port;
 	int serverSocket; // the socket's file descriptor
 	map<string, Command *> commandsMap;
+	pthread_t serverThreadId;
 };
 
