@@ -22,7 +22,7 @@ struct ThreadArgs
 	ReversiServer *self;
 };
 
-ReversiServer::ReversiServer(int port): port(port), serverSocket(0)
+ReversiServer::ReversiServer(int port): port(port), serverSocket(0),  serverThreadId(0)
 {
 	cout << "starting server..." << endl;
 	commandsMap["start"] = new StartCommand(this);
