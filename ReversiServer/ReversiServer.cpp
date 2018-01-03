@@ -12,7 +12,6 @@
 #include "ListGamesCommand.h"
 #include "JoinCommand.h"
 #include "PlayCommand.h"
-#include "CloseCommand.h"
 
 using namespace std;
 #define MAX_CONNECTED_CLIENTS 10
@@ -33,7 +32,6 @@ ReversiServer::ReversiServer(int port): port(port), serverSocket(0),  serverThre
 	commandsMap["list_games"] = new ListGamesCommand(this);
 	commandsMap["join"] = new JoinCommand(this);
 	commandsMap["play"] = new PlayCommand(this);
-	commandsMap["close"] = new CloseCommand(this);
 }
 
 ReversiServer::~ReversiServer()
