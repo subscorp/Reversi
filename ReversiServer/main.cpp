@@ -8,12 +8,29 @@
 #include <stdlib.h>
 #include <vector>
 #include <string>
+#include <fstream>
+#include <stdlib.h>
+#include <string>
 
 using namespace std;
 
 int main()
 {
-	ReversiServer server(8882);
+	//reading from port number
+	string portAsString;
+	int portNumber;
+
+	ifstream myfile("serverConnectionDetails.txt");
+	if (myfile.is_open())
+	{
+		getline(myfile,portAsString);
+		myfile.close();
+	}
+	else
+		cout << "Unable to open file";
+
+	portNumber = atoi(portAsString.c_str());
+	ReversiServer server(portNumber);
 	try {
 		server.start();
 	} catch (const char *msg) {
