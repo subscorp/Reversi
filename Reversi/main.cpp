@@ -128,7 +128,15 @@ char menuLoop(int clientSocket)
 			cout << "Message: " << buffer << endl;
 			throw "Error reading from server";
 		}
+
 		string result(buffer);
+		if (result == "")
+		{
+			close(clientSocket);
+			cout << "Disconnected from the server" << endl;
+			exit(1);
+		}
+
 		if (result == "start_x")
 			return 'X';
 		else if (result == "start_o")

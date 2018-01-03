@@ -88,6 +88,12 @@ int* RemotePlayer::makeMove(Board *board, int* move)
 		}
 
 		string result(buffer);
+		if (result == "") {
+			cout << "Disconnected from the server" << endl;
+			close(clientSocket);
+			exit(1);
+		}
+
 		vector<string> parts = split(result, " ");
 
 		move[0] = (int)parts[0][0] - 48;
