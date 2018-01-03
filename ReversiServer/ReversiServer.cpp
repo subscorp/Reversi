@@ -22,6 +22,9 @@ struct ThreadArgs
 	ReversiServer *self;
 };
 
+void* handleClientThread(void *arg);
+void* loopThread(void* socket);
+
 ReversiServer::ReversiServer(int port): port(port), serverSocket(0),  serverThreadId(0)
 {
 	cout << "starting server..." << endl;
@@ -68,8 +71,10 @@ static vector<string> split(const string &str, string delimeter)
 }
 
 /*
-void* loopThread(void* arg)
+void* loopThread(void* socket)
 {
+ 	long serverSocket = (long)socket;
+
 	ThreadArgs args;
 	// Define the client socket's structures
 	struct sockaddr_in clientAddress;
@@ -92,7 +97,7 @@ void* loopThread(void* arg)
 		args.self = this;
 		args.tid = tid;
 		pthread_create(&tid, NULL, handleClientThread, &args);
-		this->threads.push_back(tid);
+		args.self->threads.push_back(tid);
 		cout << "Thread created" << endl;
 	} // while
 	close(serverSocket);
@@ -201,6 +206,7 @@ void ReversiServer::start()
 
 	// Start listening to incoming connections
 	listen(serverSocket, MAX_CONNECTED_CLIENTS);
+//	pthread_create(&serverThreadId, NULL, loopThread, (void *)serverSocket);
 
 	// Define the client socket's structures
 	struct sockaddr_in clientAddress;
