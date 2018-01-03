@@ -29,10 +29,11 @@ public:
 	string executeCommand(string command, vector<string> args, int socket);
 	map<string, GameInfo> games;
 	vector<pthread_t> threads;
+	int serverSocket; // the socket's file descriptor
+	vector<int> clientSockets;
 
 private:
 	int port;
-	int serverSocket; // the socket's file descriptor
 	map<string, Command *> commandsMap;
 	pthread_t serverThreadId;
 };

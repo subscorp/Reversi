@@ -5,6 +5,8 @@
 #include <string.h>
 #include <iostream>
 #include <stdio.h>
+#include <sys/types.h>
+
 #include "ReversiServer.h"
 #include "StartCommand.h"
 #include "ListGamesCommand.h"
@@ -18,7 +20,6 @@ using namespace std;
 struct ThreadArgs
 {
 	int socket;
-	pthread_t tid;
 	ReversiServer *self;
 };
 
@@ -70,46 +71,47 @@ static vector<string> split(const string &str, string delimeter)
 	return result;
 }
 
-/*
-void* loopThread(void* socket)
-{
- 	long serverSocket = (long)socket;
 
-	ThreadArgs args;
+void* loopThread(void* arg)
+{
+	//ThreadArgs assignments
+	ThreadArgs *tArgs = (ThreadArgs *) arg;
+	ReversiServer *self = tArgs->self;
+
 	// Define the client socket's structures
 	struct sockaddr_in clientAddress;
-	socklen_t clientAddressLen;
+	socklen_t clientAddressLen = sizeof(clientAddress);
 
 	while(true)
 	{
 		cout << "Waiting for client connections..." << endl;
 
 		//Accept a new client connection
-		int clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddress,
+		int clientSocket = accept(self->serverSocket, (struct sockaddr *)&clientAddress,
 				&clientAddressLen);
 
 		cout << "Client connected" << endl;
 		if(clientSocket == -1)
 			throw "Error on accept";
 
+		self->clientSockets.push_back(clientSocket);
 		pthread_t tid;
-		args.socket = clientSocket;
-		args.self = this;
-		args.tid = tid;
-		pthread_create(&tid, NULL, handleClientThread, &args);
-		args.self->threads.push_back(tid);
+		tArgs->socket = clientSocket;
+		pthread_create(&tid, NULL, handleClientThread, tArgs);
+		self->threads.push_back(tid);
 		cout << "Thread created" << endl;
 	} // while
-	close(serverSocket);
+
+	delete tArgs;
+	close(self->serverSocket);
 }
-*/
+
 
 void* handleClientThread(void *arg)
 {
 	//ThreadArgs assignments
 	ThreadArgs *args = (ThreadArgs *) arg;
 	int clientSocket = args->socket;
-	pthread_t tid = args-> tid;
 	ReversiServer *self = args->self;
 
 
@@ -117,12 +119,12 @@ void* handleClientThread(void *arg)
 	{
 		char buffer[BUFFER_SIZE] = {0};
 
-		// reading message from client
+		//reading message from client
 		if(read(clientSocket, buffer, BUFFER_SIZE) == 0)
 		{
 			cout << "closing socket " << clientSocket << endl;
 
-			// move on to close the game
+			//move on to close the game
 			break;
 		}
 
@@ -148,21 +150,18 @@ void* handleClientThread(void *arg)
 	//closing the game
 
 	//erasing current thread
-	int i = 0;
 	vector<pthread_t>::iterator it;
 	for(it = self->threads.begin(); it < self->threads.end(); it++)
 	{
-		if(*it == tid)
+		if(*it == pthread_self())
 		{
 			self->threads.erase(it);
 			break;
 		}
-		i++;
 	}
 
 	//erasing the game from the games list
 	map<string, GameInfo>::iterator it2;
-	int j = 0;
 	for (it2 = self->games.begin(); it2 != self->games.end(); it2++)
 	{
 		if(it2->second.client1 == clientSocket || it2->second.client2 == clientSocket)
@@ -170,11 +169,18 @@ void* handleClientThread(void *arg)
 			self->games.erase(it2);
 			break;
 		}
-		j++;
 	}
 
 	//closing the client socket
 	close(clientSocket);
+	for (vector<int>::iterator it = self->clientSockets.begin(); it != self->clientSockets.end(); it++)
+	{
+		if(*it == clientSocket)
+		{
+			self->clientSockets.erase(it);
+			break;
+		}
+	}
 
 	return NULL;
 }
@@ -182,7 +188,7 @@ void* handleClientThread(void *arg)
 
 void ReversiServer::start()
 {
-	ThreadArgs args;
+	ThreadArgs *args = new ThreadArgs();
 
 	//create a socket point
 	serverSocket = socket(AF_INET, SOCK_STREAM, 0);
@@ -205,39 +211,26 @@ void ReversiServer::start()
 	}
 
 	// Start listening to incoming connections
-	listen(serverSocket, MAX_CONNECTED_CLIENTS);
-//	pthread_create(&serverThreadId, NULL, loopThread, (void *)serverSocket);
-
-	// Define the client socket's structures
-	struct sockaddr_in clientAddress;
-	socklen_t clientAddressLen;
-
-	while(true)
+	if (listen(serverSocket, MAX_CONNECTED_CLIENTS) == -1)
 	{
-		cout << "Waiting for client connections..." << endl;
+		cout << "Error on listen" << endl;
+		return;
+	}
 
-		//Accept a new client connection
-		int clientSocket = accept(serverSocket, (struct sockaddr *)&clientAddress,
-				&clientAddressLen);
-
-		cout << "Client connected" << endl;
-		if(clientSocket == -1)
-			throw "Error on accept";
-
-		pthread_t tid;
-		args.socket = clientSocket;
-		args.self = this;
-		args.tid = tid;
-		pthread_create(&tid, NULL, handleClientThread, &args);
-		this->threads.push_back(tid);
-		cout << "Thread created" << endl;
-	} // while
-	close(serverSocket);
+	args->self = this;
+	pthread_create(&serverThreadId, NULL, loopThread, args);
 }
 
 void ReversiServer::stop()
 {
 	pthread_cancel(serverThreadId);
+	char buffer[BUFFER_SIZE] = "";
+	for (vector<int>::iterator it = clientSockets.begin(); it != clientSockets.end(); ++it)
+	{
+		write(*it, buffer, BUFFER_SIZE);
+		close(*it);
+	}
+
 	close(serverSocket);
 	cout << "Server stopped" << endl;
 }
