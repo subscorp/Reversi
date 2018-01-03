@@ -5,7 +5,6 @@ using namespace std;
 
 Board::Board()
 {
-	/*
 	numRows = 9;
 	numCols = 9;
 	for (int i = 0; i < numRows; i++)
@@ -18,31 +17,6 @@ Board::Board()
 	boardArr[3][3] = 'O'; boardArr[4][4] = 'O';
 	boardArr[3][4] = 'X'; boardArr[4][3] = 'X';
 	numBlacks = 2; numWhites = 2;
-	*/
-
-	//to replace with above
-	numRows = 9;
-	numCols = 9;
-	for (int i = 0; i < numRows; i++)
-	{
-		for (int j = 0; j < numCols; j++)
-		{
-				boardArr[i][j] = ' ';
-		}
-	}
-
-	for (int i = 0; i < numRows - 1; i++)
-	{
-		for (int j = 0; j < numCols - 2; j++)
-		{
-			boardArr[i][j] = 'X';
-		}
-	}
-	boardArr[3][3] = 'O'; boardArr[4][4] = 'O';
-	boardArr[3][4] = 'O'; boardArr[4][3] = 'O';
-	numBlacks = 52; numWhites = 4;
-
-	//numBlacks = 56; numWhites = 0;
 }
 
 Board::Board(int numRows, int numCols)
