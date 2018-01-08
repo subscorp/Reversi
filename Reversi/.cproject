@@ -51,13 +51,18 @@
 							</tool>
 						</toolChain>
 					</folderInfo>
-					<fileInfo id="cdt.managedbuild.config.gnu.exe.debug.676742172.2107563971" name="main.cpp" rcbsApplicability="disable" resourcePath="main.cpp" toolsToInvoke="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068.2117900428">
-						<tool command="g++" id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068.2117900428" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068">
-							<inputType id="cdt.managedbuild.tool.gnu.cpp.compiler.input.831899128" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.input"/>
-						</tool>
-					</fileInfo>
+					<folderInfo id="cdt.managedbuild.config.gnu.exe.debug.676742172.121922590" name="/" resourcePath="tests">
+						<toolChain id="cdt.managedbuild.toolchain.gnu.exe.debug.170523648" name="Linux GCC" superClass="cdt.managedbuild.toolchain.gnu.exe.debug" unusedChildren="">
+							<tool id="cdt.managedbuild.tool.gnu.archiver.base.1821727723" name="GCC Archiver" superClass="cdt.managedbuild.tool.gnu.archiver.base.1576582248"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1636318749" name="GCC C++ Compiler" superClass="cdt.managedbuild.tool.gnu.cpp.compiler.exe.debug.1303051068"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.190381715" name="GCC C Compiler" superClass="cdt.managedbuild.tool.gnu.c.compiler.exe.debug.757292656"/>
+							<tool id="cdt.managedbuild.tool.gnu.c.linker.exe.debug.149550483" name="GCC C Linker" superClass="cdt.managedbuild.tool.gnu.c.linker.exe.debug.441782756"/>
+							<tool id="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.1802135394" name="GCC C++ Linker" superClass="cdt.managedbuild.tool.gnu.cpp.linker.exe.debug.382880304"/>
+							<tool id="cdt.managedbuild.tool.gnu.assembler.exe.debug.628913928" name="GCC Assembler" superClass="cdt.managedbuild.tool.gnu.assembler.exe.debug.559884605"/>
+						</toolChain>
+					</folderInfo>
 					<sourceEntries>
-						<entry excluding="forSubmit/src/client/main_tests.cpp|main_tests.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="tests|forSubmit/src/client/main_tests.cpp|main_tests.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

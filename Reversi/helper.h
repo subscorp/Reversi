@@ -7,3 +7,4 @@ typedef struct possibleMove
 	int y;
 }location;
 
+//
