@@ -15,6 +15,9 @@
 
 using namespace std;
 #define MAX_CONNECTED_CLIENTS 10
+#define THREAD_NUM 5
+
+
 
 struct ThreadArgs
 {
@@ -72,9 +75,12 @@ static vector<string> split(const string &str, string delimeter)
 
 void* loopThread(void* arg)
 {
+	ThreadPool pool(THREAD_NUM);
+
 	//ThreadArgs assignments
 	ThreadArgs *tArgs = (ThreadArgs *) arg;
 	ReversiServer *self = tArgs->self;
+
 
 	// Define the client socket's structures
 	struct sockaddr_in clientAddress;
@@ -95,8 +101,9 @@ void* loopThread(void* arg)
 		self->clientSockets.push_back(clientSocket);
 		pthread_t tid;
 		tArgs->socket = clientSocket;
-		pthread_create(&tid, NULL, handleClientThread, tArgs);
-		self->threads.push_back(tid);
+		//pthread_create(&tid, NULL, handleClientThread, tArgs);
+		//self->threads.push_back(tid);
+		pool.addTask(new Task(handleClientThread, (void *)tArgs));
 		cout << "Thread created" << endl;
 	} // while
 
@@ -231,6 +238,7 @@ void ReversiServer::stop()
 
 	close(serverSocket);
 	cout << "Server stopped" << endl;
+
 }
 
 
